@@ -16,8 +16,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { productI } from "@/interfaces/products";
 
-export default function Products() {
+export default async function Products() {
+  const response = await fetch("https://ecommerce.routemisr.com/api/v1/products")
+  const {data:products}: {data:productI[]} = await response.json()
+
   return (
     <>
       <header>
@@ -67,12 +71,14 @@ export default function Products() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto mb-5 mt-5 md:p-4 border border-gray-300 rounded-2xl shadow h-screen">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          <div className="col-span-1">
-             <ProductCard/>
-          </div>
-            
+
+      <div className="max-w-7xl mx-auto mb-5 mt-5 md:p-4 border border-gray-300 rounded-2xl shadow">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:p-2">
+          {products.map( (prod)=>(
+            <div key={prod._id}>
+            <ProductCard prod={prod}/>
+            </div>
+          ) )}
         </div>
              
       
