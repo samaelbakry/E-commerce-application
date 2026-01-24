@@ -49,6 +49,9 @@ body {
     .accent-color{
       @apply text-cyan-800
     }
+    .second-color{
+      @apply text-gray-700
+    }
     .bg-blur{
         @apply bg-white/10 backdrop-blur-xl rounded-2xl border border-white/30 shadow-2xl font-semibold
     }

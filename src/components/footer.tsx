@@ -5,7 +5,7 @@ import { MdOutlineShoppingCart } from 'react-icons/md'
 export default function Footer() {
   return <>
   <footer className="bg-gray-200 shadow">
-    <div className="mx-auto w-full max-w-7xl p-4 py-6 lg:py-8">
+    <div className="mx-auto w-full max-w-7xl p-4 py-6">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0 flex items-center">
              <MdOutlineShoppingCart className="size-6 text-gray-700"/>

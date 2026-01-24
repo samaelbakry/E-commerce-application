@@ -34,7 +34,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${DosisSans.className} antialiased`} >
         <Navbar />
-        {children}
+        <main className="min-h-[calc(100vh-240px)]">
+            {children}
+        </main>
         <Footer/>
       </body>
     </html>

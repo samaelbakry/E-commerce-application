@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <>
       <main>
-        <div className="max-w-6xl mx-auto py-10 h-screen m-3" id="home">
+        <div className="max-w-6xl mx-auto py-10 m-3" id="home">
           <div className="flex flex-col justify-center items-center gap-2">
             <h1 className="title md:text-9xl text-5xl accent-color font-semibold">
               welcome to GoCart
