@@ -39,7 +39,7 @@ export default function Navbar() {
           <div>
             <ul className="md:flex hidden items-center font-light gap-5 capitalize md:text-xl text-gray-700">
               <li>
-                <Link href="/products" className={path === "/products" ? "active" : ""}  >
+                <Link href="/products" className={path.includes("/products") ? "active" : ""}  >
                  products
                 </Link>
               </li>
@@ -63,7 +63,6 @@ export default function Navbar() {
               <DropdownMenu>
            <DropdownMenuTrigger asChild>
             <User className="size-6 cursor-pointer"/>
-         
            </DropdownMenuTrigger>
         <DropdownMenuContent className="w-32">
         <DropdownMenuGroup>
