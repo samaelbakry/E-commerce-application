@@ -3,6 +3,7 @@ import { Geist, Geist_Mono , Dosis } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/common/navbar";
 import Footer from "@/components/common/footer";
+import { Toaster } from "sonner";
 
 const DosisSans = Dosis({
   variable: "--font-Dosis-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
         <Navbar />
         <main className="min-h-[calc(100vh-240px)]">
             {children}
+            <Toaster richColors position="top-right"/>
         </main>
         <Footer/>
       </body>

@@ -63,7 +63,7 @@ export default async function ProductDetails( {params} :{ params: Promise<produc
                 <span>Description: {product.description}</span>
                 <span>price: {product.price} EGP</span>
                 </div>
-                  <div className="flex items-center gap-3 my-5">
+                  <div className="flex items-center flex-wrap gap-3 my-5">
                {product.images.map((img)=>(
                 <Image src={img} alt="prod.details.img" height={100} width={100}/>
                ) )}

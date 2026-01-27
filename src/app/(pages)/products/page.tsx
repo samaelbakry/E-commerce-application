@@ -74,10 +74,10 @@ export default async function Products() {
       <div className="max-w-7xl bg-blur mx-auto mb-5 mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:p-4">
           {products.map((prod) => (
             <div key={prod._id}>
-              <Card className="relative mx-auto w-full bg-blur pt-0 mt-2 h-full hover:scale-105 duration-500 cursor-pointer">
+              <Card className="relative mx-auto md:w-full bg-blur pt-0 mt-2 h-full hover:scale-105 duration-500 cursor-pointer w-100">
                 <Link href={`/products/${prod.id}`}>
                   <div className="relative" />
-                  <Image src={prod.imageCover} width={400} height={400} alt="product-cover-image"className="relative w-full object-contain rounded-2xl p-4"
+                  <Image src={prod.imageCover} width={400} height={400} alt="product-cover-image"className="relative w-full object-contain rounded-2xl p-4 w-[300px] h-[300px] md:w-100 md:h-100"
                   />
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">

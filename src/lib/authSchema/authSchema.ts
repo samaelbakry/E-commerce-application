@@ -1,0 +1,22 @@
+import * as zod from "zod"
+
+export const registerSchema = zod.object({
+    name: zod.string().nonempty("Name is required").min(3, "Name must be at least 3 characters").max(20, "Name must be at most 20 characters").trim(),
+    email: zod.email({error:"Please enter a valid email address"}),
+    password: zod.string().nonempty("password is required").min(3, "password must be at least 3 characters").max(20, "password must be at most 20 characters"),
+    rePassword: zod.string().nonempty("rePassword is required"),
+    phone:zod.string().nonempty("Phone is required").regex(/^01[1250][0-9]{8}$/ , "Phone number must be 11 digits")
+
+}).refine( (data) => data.rePassword === data.password , { path: ["rePassword"] , error : "Password confirmation does not match"})
+
+export type registerSchemaType = zod.infer<typeof registerSchema>
+
+
+
+
+export const loginSchema = zod.object({
+    email: zod.email({error:"Please enter a valid email address"}),
+    password: zod.string().nonempty("password is required").min(3, "password must be at least 3 characters").max(20, "password must be at most 20 characters"),
+})
+
+export type loginSchemaType = zod.infer<typeof loginSchema>
