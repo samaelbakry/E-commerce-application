@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { loginSchema, loginSchemaType } from "@/lib/authSchema/authSchema";
-import { signIn } from "@/services/authServices";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { ImSpinner9 } from "react-icons/im";
 import { toast } from "sonner";
+import {signIn} from "next-auth/react"
+
 
 export default function Login() {
   const navigate = useRouter()
@@ -22,12 +23,25 @@ export default function Login() {
   });
   
   async function sendLogInData(values:loginSchemaType){
-    const response= await signIn(values)
-    if(response.message === "success"){
-        navigate.push("/")
-        toast.success("Logged in Successfully !")
+    // const response= await signIn(values)
+    // if(response.message === "success"){
+    //     navigate.push("/")
+    //     toast.success("Logged in Successfully !")
+    // }
+    // console.log(response);
+
+    const response= await signIn( "credentials", {
+      redirect:true,
+      email:values.email,
+      password:values.password
+    })
+    console.log(response)
+    if(response?.ok){
+       navigate.push("/")
+      toast.success("Logged in Successfully !")
+    }else{
+      toast.error(response?.error)
     }
-    console.log(response);
   }
 
   
@@ -79,7 +93,7 @@ export default function Login() {
             )}
           />
           
-           <Button className="font-bold cursor-pointer w-1/2 text-md md:translate-x-40">{form.formState.isSubmitting ? <ImSpinner9  className="size-4 animate-spin"/> : "Login"}</Button>
+           <Button className="font-bold cursor-pointer w-1/2 text-md md:translate-x-45">{form.formState.isSubmitting ? <ImSpinner9  className="size-4 animate-spin"/> : "Login"}</Button>
         </form>
         
       </div>

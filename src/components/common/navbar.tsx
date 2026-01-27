@@ -1,7 +1,7 @@
 "use client";
 import { HiBars3 } from "react-icons/hi2";
 import { IoIosClose } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdOutlineShoppingCart } from "react-icons/md";
@@ -18,9 +18,16 @@ import {
 export default function Navbar() {
   const path = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [mounted, setMounted] = useState<boolean>(false);
+
   function ToggleMenu() {
     setIsOpen(!isOpen);
   }
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  
 
   return (
     <>
@@ -74,7 +81,8 @@ export default function Navbar() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <DropdownMenu>
+            {mounted && <>
+             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <User className="size-6 cursor-pointer" />
               </DropdownMenuTrigger>
@@ -96,8 +104,8 @@ export default function Navbar() {
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-
             <HeartPlus className="size-6 cursor-pointer" />
+            </>}
           </div>
         </div>
       </nav>

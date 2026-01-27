@@ -135,7 +135,7 @@ export default function Register() {
               </Field>
             )}
           />
-          <Button className="font-bold cursor-pointer w-1/2 text-md md:translate-x-40">{form.formState.isSubmitting ? <ImSpinner9  className="size-4 animate-spin"/> : "Register"}</Button>
+          <Button className="font-bold cursor-pointer w-1/2 text-md md:translate-x-45">{form.formState.isSubmitting ? <ImSpinner9  className="size-4 animate-spin"/> : "Register"}</Button>
         </form>
         
       </div>

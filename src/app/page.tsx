@@ -34,7 +34,7 @@ export default function Home() {
       <main>
         <div className="max-w-6xl mx-auto py-10 m-3" id="home">
           <div className="flex flex-col justify-center items-center gap-2">
-            <h1 className="title md:text-9xl text-5xl accent-color font-semibold">
+            <h1 className="title md:text-6xl lg:text-8xl text-5xl max-w-fit accent-color font-semibold duration-500">
               welcome to GoCart
             </h1>
             <p className="text-xl text-gray-700 paragraph">Everything You Love, One Click Away</p>
