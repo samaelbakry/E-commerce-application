@@ -6,6 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Card } from "@/components/ui/card";
 import {
   Pagination,
   PaginationContent,
@@ -15,23 +16,28 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { BrandI } from "@/interfaces/brands";
+import { getAllBrands } from "@/services/brandsServices";
+import Image from "next/image";
+import Link from "next/link";
 
-export default function Brands() {
+export default async function Brands() {
+
+  const {data} = await getAllBrands()
+  const brands:BrandI[] = data
+
   return <>
    <header>
         <div className="max-w-7xl mx-auto p-3 my-3 bg-blur flex justify-between">
           <div className="flex flex-col gap-2 items-start m-2">
-            <p className="md:text-xl text-md second-color paragraph">
-              Everything You Love, One Click Away
-            </p>
             <Breadcrumb className="mt-2">
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                  <BreadcrumbLink href="/" className="accent-color">Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/products">products</BreadcrumbLink>
+                  <BreadcrumbLink href="/products" className="accent-color">products</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
@@ -67,6 +73,24 @@ export default function Brands() {
             </Pagination>
           </div>
         </div>
-      </header>
+   </header>
+
+      <div className="max-w-7xl bg-blur mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:p-4">
+        {brands.map((brand)=>(
+          <div key={brand._id}>
+            <Card className="relative mx-auto w-full bg-blur pt-0 mt-2 h-full hover:scale-105 duration-500 cursor-pointer">
+                <Link href={`/brands/${brand._id}`}>
+                  <div className="relative" />
+                  <Image src={brand.image} width={400} height={400} alt="product-cover-image"className="relative w-full object-contain rounded-2xl p-2"
+                  />
+                </Link>
+                <h5 className="text-2xl text-center">{brand.name}</h5>
+              </Card>
+
+          </div>
+        ))}
+
+
+      </div>
   </>
 }

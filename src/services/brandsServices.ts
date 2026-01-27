@@ -1,18 +1,18 @@
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-export async function getAllProducts() {
+export async function getAllBrands() {
   try {
-    const response = await fetch(`${API_URL}/products`);
+    const response = await fetch(`${API_URL}/brands`);
     const data = await response.json();
-    return data
+    return data;
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function getSpecificProduct(id:string) {
+export async function getSpecificBrand(id:string) {
   try {
-    const response = await fetch(`${API_URL}/products/${id}`);
+    const response = await fetch(`${API_URL}/brands/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {

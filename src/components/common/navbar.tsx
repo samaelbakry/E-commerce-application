@@ -44,7 +44,7 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
-                <Link href="/brands" className={path === "/brands" ? "active" : ""} >
+                <Link href="/brands" className={path.includes("/brands") ? "active" : ""} >
                  brands
                 </Link>
               </li>

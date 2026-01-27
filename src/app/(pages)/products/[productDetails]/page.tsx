@@ -29,11 +29,11 @@ export default async function ProductDetails( {params} :{ params: Promise<produc
             <Breadcrumb className="mt-2">
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                  <BreadcrumbLink href="/" className="accent-color">Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/products">Products</BreadcrumbLink>
+                  <BreadcrumbLink href="/products" className="accent-color">Products</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
@@ -42,7 +42,7 @@ export default async function ProductDetails( {params} :{ params: Promise<produc
               </BreadcrumbList>
             </Breadcrumb>
         </div>
-      </header>
+  </header>
 
       <div className="max-w-7xl mx-auto bg-blur my-4">
         <div className="grid grid-cols-1  md:grid-cols-2 p-3 gap-2 md:gap-0">
@@ -54,7 +54,6 @@ export default async function ProductDetails( {params} :{ params: Promise<produc
               </Badge>
             </div>
             <div className="col-span-1 pt-2 p-3 bg-gray-100 rounded-2xl second-color">
-                
                 <div className="flex-col flex gap-3">
                   <h5 className="text-xl">Product Details</h5>
                   <hr />
@@ -64,15 +63,11 @@ export default async function ProductDetails( {params} :{ params: Promise<produc
                 <span>Description: {product.description}</span>
                 <span>price: {product.price} EGP</span>
                 </div>
-
                   <div className="flex items-center gap-3 my-5">
                {product.images.map((img)=>(
                 <Image src={img} alt="prod.details.img" height={100} width={100}/>
                ) )}
               </div>
-                
-                  
-                
             </div>
 
         </div>

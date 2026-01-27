@@ -21,6 +21,7 @@ export default async function Products() {
   const { data } = await getAllProducts();
   
   const products:productI[] = data
+
   return (
     <>
       <header>
@@ -32,7 +33,7 @@ export default async function Products() {
             <Breadcrumb className="mt-2">
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                  <BreadcrumbLink href="/" className="accent-color">Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
@@ -70,11 +71,10 @@ export default async function Products() {
         </div>
       </header>
 
-      <div className="max-w-7xl bg-blur mx-auto mb-5 mt-5 md:p-4">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:p-2">
+      <div className="max-w-7xl bg-blur mx-auto mb-5 mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:p-4">
           {products.map((prod) => (
             <div key={prod._id}>
-              <Card className="relative mx-auto w-full bg-blur pt-0 mt-2 h-full">
+              <Card className="relative mx-auto w-full bg-blur pt-0 mt-2 h-full hover:scale-105 duration-500 cursor-pointer">
                 <Link href={`/products/${prod.id}`}>
                   <div className="relative" />
                   <Image src={prod.imageCover} width={400} height={400} alt="product-cover-image"className="relative w-full object-contain rounded-2xl p-4"
@@ -111,7 +111,6 @@ export default async function Products() {
             </div>
           ))}
         </div>
-      </div>
     </>
   );
 }
