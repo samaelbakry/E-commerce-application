@@ -18,7 +18,7 @@ export async function signUp(values:registerSchemaType){
     }
 }
 
-export async function signIn(values:loginSchemaType){
+export async function signInUser(values:loginSchemaType){
     try {
        const response = await fetch(`${API_URL}/auth/signin` , {
         method:"post",

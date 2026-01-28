@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { HeartPlus, User } from "lucide-react";
+import { HeartPlus, LogOut, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,19 +14,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Navbar() {
   const path = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [mounted, setMounted] = useState<boolean>(false);
+    const { data: sessionData } = useSession();
+
+    // const [mounted, setMounted] = useState<boolean>(false);
 
   function ToggleMenu() {
     setIsOpen(!isOpen);
   }
   
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  // useEffect(() => {
+  //   setMounted(true)
+  // }, [])
+
+  function logOut(){
+   setTimeout(() => {
+     signOut({callbackUrl:"/"})
+   }, 1000);
+  }
   
 
   return (
@@ -81,31 +90,37 @@ export default function Navbar() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {mounted && <>
+            {/* {mounted && <> */}
              <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <User className="size-6 cursor-pointer" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-32">
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>My cart</DropdownMenuItem>
-                  <DropdownMenuItem>
+                  {sessionData? <>
+                  <DropdownMenuItem  className="cursor-pointer">profile</DropdownMenuItem>
+                  <DropdownMenuItem  className="cursor-pointer">orders</DropdownMenuItem>
+                  </> : <>
+                    <DropdownMenuItem>
                     <Link href="/register">Register</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link href="/login">Login</Link>
                   </DropdownMenuItem>
+                  </>
+                  }
+                
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem variant="destructive">
+                  <DropdownMenuItem onClick={logOut} variant="destructive" className="cursor-pointer">
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
             <HeartPlus className="size-6 cursor-pointer" />
-            </>}
+            {/* </>} */}
           </div>
         </div>
       </nav>

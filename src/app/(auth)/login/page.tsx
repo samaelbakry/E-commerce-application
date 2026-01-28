@@ -30,15 +30,19 @@ export default function Login() {
     // }
     // console.log(response);
 
-    const response= await signIn( "credentials", {
-      redirect:true,
-      email:values.email,
-      password:values.password
+    const response= await signIn("credentials", { // from next auth (for calling authorize fn)
+     email:values.email,
+      password:values.password,
+      redirect:false,
     })
     console.log(response)
+    
     if(response?.ok){
-       navigate.push("/")
-      toast.success("Logged in Successfully !")
+       toast.success("Logged in Successfully !")
+       console.log(response)
+       setTimeout(() => {
+      navigate.push("/")
+       }, 1000);
     }else{
       toast.error(response?.error)
     }
