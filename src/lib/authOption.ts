@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
        return token;
     },
     session({session , token}){
-        if(session){
+        if(token){
             session.user=token.user
         }
         return session

@@ -4,14 +4,20 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function proxy(request:NextRequest) {
 
-    const token = await getToken({req:request})
-    if(token){
-       return NextResponse.next()
-    }else{
+    const token = await getToken({ req:request })
+    const {pathname} = request.nextUrl
+
+    const authPages = pathname ==="/login" || pathname ==="/register"
+
+    if(token && authPages){
+       return NextResponse.redirect(new URL("/" , request.url))
+    }
+    if(!token && !authPages){
        return NextResponse.redirect(new URL("/login" , request.url))
     }
+    return NextResponse.next()
 }
 
 export const config = {
-    matcher:["/brands", "/categories"]
+    matcher:["/brands", "/categories" , "/login" , "/register"]
 }

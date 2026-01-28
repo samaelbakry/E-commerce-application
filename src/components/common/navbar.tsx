@@ -50,6 +50,7 @@ export default function Navbar() {
               </h2>
             </Link>
           </div>
+          {/* mobile dropdown */}
           <div>
             <ul className="md:flex hidden items-center font-light gap-5 capitalize md:text-xl text-gray-700">
               <li>
@@ -78,16 +79,6 @@ export default function Navbar() {
               </li>
             </ul>
 
-            <div
-              className="md:hidden transition-all duration-200"
-              onClick={ToggleMenu}
-            >
-              {isOpen ? (
-                <IoIosClose className="size-8" />
-              ) : (
-                <HiBars3 className="size-8" />
-              )}
-            </div>
           </div>
           <div className="flex items-center gap-2">
             {/* {mounted && <> */}
@@ -122,6 +113,16 @@ export default function Navbar() {
             <HeartPlus className="size-6 cursor-pointer" />
             {/* </>} */}
           </div>
+            <div
+              className="md:hidden cursor-pointer transition-all duration-200"
+              onClick={ToggleMenu}
+            >
+              {isOpen ? (
+                <IoIosClose className="size-8" />
+              ) : (
+                <HiBars3 className="size-8" />
+              )}
+            </div>
         </div>
       </nav>
 
