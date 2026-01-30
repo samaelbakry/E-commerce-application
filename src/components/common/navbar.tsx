@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { HeartPlus, LogOut, User } from "lucide-react";
+import { HeartPlus, LogOut, ShoppingBasket, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -110,7 +110,12 @@ export default function Navbar() {
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
+            <Link href='/wishlist'>
             <HeartPlus className="size-6 cursor-pointer" />
+            </Link>
+           <Link href='/cart'>
+            <ShoppingBasket  className="size-6 cursor-pointer"/>
+           </Link>
             {/* </>} */}
           </div>
             <div

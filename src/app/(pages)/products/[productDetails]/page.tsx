@@ -11,12 +11,13 @@ import { getSpecificProduct } from "@/services/productsServices";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge"
 import { Star } from "lucide-react";
+import AddToCart from "@/components/addToCart/addToCart";
 
  interface productIdType{
   productDetails:string
 }
 
-export default async function ProductDetails( {params} :{ params: Promise<productIdType> }) {
+export default async function ProductId( { params } :{ params: Promise<productIdType> }) {
   const {  productDetails } = await params
   const {data} = await getSpecificProduct(productDetails)
   const product :productI = data
@@ -62,6 +63,7 @@ export default async function ProductDetails( {params} :{ params: Promise<produc
                 <span>Brand: {product.brand.name}</span>
                 <span>Description: {product.description}</span>
                 <span>price: {product.price} EGP</span>
+                <AddToCart/>
                 </div>
                   <div className="flex items-center flex-wrap gap-3 my-5">
                {product.images.map((img)=>(

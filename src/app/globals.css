@@ -55,6 +55,9 @@ body {
     .bg-blur{
         @apply bg-white/10 backdrop-blur-xl rounded-2xl border border-white/30 shadow-2xl font-semibold
     }
+    .delete-btn{
+      @apply outline-2 rounded-lg outline-red-500 duration-400 text-red-500 font-semibold text-base px-3 py-1 cursor-pointer hover:scale-105 hover:bg-red-700 hover:text-white hover:font-bold
+    }
 
 }
 
