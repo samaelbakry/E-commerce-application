@@ -63,7 +63,7 @@ export default async function ProductId( { params } :{ params: Promise<productId
                 <span>Brand: {product.brand.name}</span>
                 <span>Description: {product.description}</span>
                 <span>price: {product.price} EGP</span>
-                <AddToCart/>
+                <AddToCart prodId={product._id}/>
                 </div>
                   <div className="flex items-center flex-wrap gap-3 my-5">
                {product.images.map((img)=>(

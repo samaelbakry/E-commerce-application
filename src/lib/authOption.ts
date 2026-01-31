@@ -12,6 +12,7 @@ interface decodedTokenType {
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
+    error:"/login"
   },
   providers: [
     Credentials({

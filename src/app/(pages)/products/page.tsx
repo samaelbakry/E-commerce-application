@@ -1,4 +1,11 @@
-import {Breadcrumb,BreadcrumbItem,BreadcrumbLink,BreadcrumbList,BreadcrumbPage,BreadcrumbSeparator,} from "@/components/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import {
   Pagination,
   PaginationContent,
@@ -11,7 +18,12 @@ import {
 import { productI } from "@/interfaces/products";
 import { getAllProducts } from "@/services/productsServices";
 import Link from "next/link";
-import { Card,CardDescription, CardHeader,CardTitle,} from "@/components/ui/card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import AddToCart from "@/components/addToCart/addToCart";
@@ -19,8 +31,8 @@ import React from "react";
 
 export default async function Products() {
   const { data } = await getAllProducts();
-  
-  const products:productI[] = data
+
+  const products: productI[] = data;
 
   return (
     <>
@@ -33,7 +45,9 @@ export default async function Products() {
             <Breadcrumb className="mt-2">
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/" className="accent-color">Home</BreadcrumbLink>
+                  <BreadcrumbLink href="/" className="accent-color">
+                    Home
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
@@ -72,45 +86,53 @@ export default async function Products() {
       </header>
 
       <div className="max-w-7xl border border-gray-300 rounded-2xl  mx-auto mb-5 mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:p-5">
-          {products.map((prod) => (
-            <div key={prod._id}>
-              <Card className="relative mx-auto md:w-full bg-blur pt-0 mt-2 md:h-140 h-120 hover:scale-105 duration-500 cursor-pointer w-100">
-                <Link href={`/products/${prod.id}`}>
-                  <div className="relative" />
-                  <Image src={prod.imageCover} width={300} height={300} alt="product-cover-image"className="relative w-full object-contain rounded-2xl p-2 w-[300px] h-[300px] md:w-100 md:h-100"
-                  />
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      Title: {prod.title.split(" ", 3).join(" ")}
-                      <span>{prod.brand.name}</span>
-                    </CardTitle>
-                    <span>{prod.category.name}</span>
-                    <CardDescription className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        {[0, 1, 2, 3, 4].map((star) => {
-                          const filledStar = star < Math.round(prod.ratingsAverage);
-                          return (
-                            <>
-                              <Star className={`size-4 ${filledStar ? "text-yellow-400 fill-yellow-400" : "text-gray-400"}`}/>
-                            </>
-                          );
-                        })}
-                        <span className="accent-color">
-                          {prod.ratingsAverage}
-                        </span>
-                      </div>
-                      <p className="font-semibold second-color">
-                        Price: {prod.price} EGP
-                      </p>
-                    </CardDescription>
-                  </CardHeader>
-                </Link>
-
-                <AddToCart />
-              </Card>
-            </div>
-          ))}
-        </div>
+        {products.map((prod) => (
+          <div key={prod._id}>
+            <Card className="relative mx-auto md:w-full bg-blur pt-0 mt-2 md:h-140 h-120 hover:scale-105 duration-500 cursor-pointer w-100">
+              <Link href={`/products/${prod.id}`}>
+                <div className="relative" />
+                <Image
+                  src={prod.imageCover}
+                  width={300}
+                  height={300}
+                  alt="product-cover-image"
+                  className="relative object-contain rounded-2xl p-2 w-75 h-75 md:w-100 md:h-100"
+                />
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between">
+                    Title: {prod.title.split(" ", 3).join(" ")}
+                    <span>{prod.brand.name}</span>
+                  </CardTitle>
+                  <span>{prod.category.name}</span>
+                  <CardDescription className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      {[0, 1, 2, 3, 4].map((star ,index) => {
+                        const filledStar =
+                          star < Math.round(prod.ratingsAverage);
+                        return (
+                          <React.Fragment key={index}>
+                            <Star
+                              className={`size-4 ${filledStar ? "text-yellow-400 fill-yellow-400" : "text-gray-400"}`}
+                            />
+                          </React.Fragment>
+                        );
+                      })}
+                      <span className="accent-color">
+                        {prod.ratingsAverage}
+                      </span>
+                    </div>
+                    <p className="font-semibold second-color">
+                      Price: {prod.price} EGP
+                    </p>
+                  </CardDescription>
+                </CardHeader>
+              </Link>
+                <AddToCart prodId={prod._id}/>
+           
+            </Card>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

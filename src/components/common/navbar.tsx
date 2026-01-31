@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { HeartPlus, LogOut, ShoppingBasket, User } from "lucide-react";
+import { Badge, HeartPlus, LogOut, ShoppingBasket, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,11 +15,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut, useSession } from "next-auth/react";
-
 export default function Navbar() {
   const path = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { data: sessionData } = useSession();
+    const { data:sessionData } = useSession();
 
     // const [mounted, setMounted] = useState<boolean>(false);
 
@@ -27,9 +26,10 @@ export default function Navbar() {
     setIsOpen(!isOpen);
   }
   
-  // useEffect(() => {
-  //   setMounted(true)
-  // }, [])
+  useEffect(() => {
+    // setMounted(true)
+   
+  }, [])
 
   function logOut(){
    setTimeout(() => {
@@ -110,12 +110,15 @@ export default function Navbar() {
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
+            {sessionData ? <>
             <Link href='/wishlist'>
             <HeartPlus className="size-6 cursor-pointer" />
             </Link>
            <Link href='/cart'>
             <ShoppingBasket  className="size-6 cursor-pointer"/>
            </Link>
+            </> : "" }
+            
             {/* </>} */}
           </div>
             <div
