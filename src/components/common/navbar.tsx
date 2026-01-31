@@ -1,11 +1,11 @@
 "use client";
 import { HiBars3 } from "react-icons/hi2";
 import { IoIosClose } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { Badge, HeartPlus, LogOut, ShoppingBasket, User } from "lucide-react";
+import { HeartPlus, LogOut, ShoppingBasket, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +15,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut, useSession } from "next-auth/react";
+import { Badge } from "../ui/badge";
+import { cartContext } from "@/providers/cartDataProvider";
 export default function Navbar() {
+
+  const {noOfCartItems , handleCartNumber} = useContext(cartContext)
   const path = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
     const { data:sessionData } = useSession();
@@ -28,7 +32,7 @@ export default function Navbar() {
   
   useEffect(() => {
     // setMounted(true)
-   
+
   }, [])
 
   function logOut(){
@@ -84,13 +88,13 @@ export default function Navbar() {
             {/* {mounted && <> */}
              <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <User className="size-6 cursor-pointer" />
+                <User className="size-6 md:size-8 cursor-pointer" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-32">
                 <DropdownMenuGroup>
                   {sessionData? <>
-                  <DropdownMenuItem  className="cursor-pointer">profile</DropdownMenuItem>
-                  <DropdownMenuItem  className="cursor-pointer">orders</DropdownMenuItem>
+                  <DropdownMenuItem  className="cursor-pointer">Profile</DropdownMenuItem>
+                  <DropdownMenuItem  className="cursor-pointer">Orders</DropdownMenuItem>
                   </> : <>
                     <DropdownMenuItem>
                     <Link href="/register">Register</Link>
@@ -112,11 +116,14 @@ export default function Navbar() {
             </DropdownMenu>
             {sessionData ? <>
             <Link href='/wishlist'>
-            <HeartPlus className="size-6 cursor-pointer" />
+            <HeartPlus className="size-6 md:size-8 cursor-pointer" />
             </Link>
-           <Link href='/cart'>
-            <ShoppingBasket  className="size-6 cursor-pointer"/>
+          <span className="relative">
+             <Link href='/cart'>
+             <ShoppingBasket  className="size-6 md:size-8 cursor-pointer"/>
+             <Badge className="bg-green-50 text-green-700 absolute -top-2 -end-2">{noOfCartItems}</Badge>
            </Link>
+          </span>
             </> : "" }
             
             {/* </>} */}

@@ -5,6 +5,7 @@ import Navbar from "@/components/common/navbar";
 import Footer from "@/components/common/footer";
 import { Toaster } from "sonner";
 import AuthProvider from "@/providers/authProvider";
+import CartDataProvider from "@/providers/cartDataProvider";
 
 const DosisSans = Dosis({
   variable: "--font-Dosis-sans",
@@ -36,12 +37,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${DosisSans.className} antialiased`} >
        <AuthProvider>
-         <Navbar />
-        <main className="min-h-[calc(100vh-240px)]">
+         <CartDataProvider>
+          <Navbar />
+           <main className="min-h-[calc(100vh-240px)]">
             {children}
             <Toaster richColors position="top-right"/>
-        </main>
-        <Footer/>
+            </main>
+            <Footer/>
+         </CartDataProvider>
        </AuthProvider>
       </body>
     </html>

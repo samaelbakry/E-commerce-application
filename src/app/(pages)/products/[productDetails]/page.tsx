@@ -48,7 +48,7 @@ export default async function ProductId( { params } :{ params: Promise<productId
       <div className="max-w-7xl mx-auto bg-blur my-4">
         <div className="grid grid-cols-1  md:grid-cols-2 p-3 gap-2 md:gap-0">
             <div className="col-span-1 mx-auto pt-2 relative">
-              <Image src={product.images[1]} alt="prod.details.img" height={300} width={300} className="rounded-3xl shadow"/>
+              <Image src={product.images[0]} alt="prod.details.img" height={300} width={300} className="rounded-3xl shadow"/>
               <Badge className="bg-white accent-color text-md absolute top-2 end-2 p-1 bg-blur">
                 {product.ratingsAverage}
                  <Star className="text-yellow-400"/>
@@ -66,8 +66,8 @@ export default async function ProductId( { params } :{ params: Promise<productId
                 <AddToCart prodId={product._id}/>
                 </div>
                   <div className="flex items-center flex-wrap gap-3 my-5">
-               {product.images.map((img)=>(
-                <Image src={img} alt="prod.details.img" height={100} width={100}/>
+               {product.images.map((img , index )=>(
+                <Image key={index} src={img} alt="prod.details.img" height={100} width={100}/>
                ) )}
               </div>
             </div>
