@@ -19,7 +19,7 @@ import { Badge } from "../ui/badge";
 import { cartContext } from "@/providers/cartDataProvider";
 export default function Navbar() {
 
-  const {noOfCartItems , handleCartNumber} = useContext(cartContext)
+  const {noOfCartItems , handleCartNumber , noOfwishlistItems} = useContext(cartContext)
   const path = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
     const { data:sessionData } = useSession();
@@ -115,15 +115,19 @@ export default function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
             {sessionData ? <>
-            <Link href='/wishlist'>
-            <HeartPlus className="size-6 md:size-8 cursor-pointer" />
-            </Link>
+           <span className="relative">
+             <Link href='/wishlist'>
+             <HeartPlus className="size-6 md:size-8 cursor-pointer" />
+             <Badge className="bg-red-50 text-red-700 absolute -top-2 -end-2">{noOfwishlistItems}</Badge>
+           </Link>
+          </span>
           <span className="relative">
              <Link href='/cart'>
              <ShoppingBasket  className="size-6 md:size-8 cursor-pointer"/>
-             <Badge className="bg-green-50 text-green-700 absolute -top-2 -end-2">{noOfCartItems}</Badge>
+             <Badge className="bg-red-50 text-red-700 absolute -top-2 -end-2">{noOfCartItems}</Badge>
            </Link>
           </span>
+          
             </> : "" }
             
             {/* </>} */}

@@ -2,6 +2,8 @@
 import { getUserToken } from "@/lib/auth";
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+
+//-- ADD PRODUCT --//
 export async function addProduct(productId:string){
     const token = await getUserToken()
     if(!token){
@@ -24,7 +26,7 @@ export async function addProduct(productId:string){
         console.log(error)
     }
 }
-
+//-- GET USER CART --//
 export async function getLoggedUserCart(){
     const token = await getUserToken()
     try {
@@ -41,7 +43,7 @@ export async function getLoggedUserCart(){
         console.log(error)
     }
 }
-
+//-- DELETE PRODUCT --//
 export async function deleteCartProduct(prodId:string){
     const token = await getUserToken()
     try {
@@ -59,6 +61,7 @@ export async function deleteCartProduct(prodId:string){
         console.log(error)
     }
 }
+//-- CLEAR CART --//
 export async function clearCartProducts(){
     const token = await getUserToken()
     try {
@@ -76,7 +79,7 @@ export async function clearCartProducts(){
         console.log(error)
     }
 }
-
+//-- CART QUANTITY --//
 export async function updateCartProduct(prodId:string , updatedCount:number){
     const token = await getUserToken()
     try {

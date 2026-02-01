@@ -25,6 +25,7 @@ export interface cartProductI{
 }
 
 export interface cartQuantityI{
-    noOfCartItems: number
-    handleCartNumber:()=>void
+  handleCartNumber:()=>void
+  noOfCartItems: number
+  noOfwishlistItems: number
 }

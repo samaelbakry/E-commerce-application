@@ -39,9 +39,9 @@ export default async function Products() {
       <header>
         <div className="max-w-7xl mx-auto p-3 my-3 bg-blur flex justify-between">
           <div className="flex flex-col gap-2 items-start m-2">
-            <p className="md:text-xl text-md second-color paragraph">
+            <h1 className="text-xl second-color font-bold paragraph">
               Everything You Love, One Click Away
-            </p>
+            </h1>
             <Breadcrumb className="mt-2">
               <BreadcrumbList>
                 <BreadcrumbItem>
