@@ -49,10 +49,11 @@ export default function Cart() {
               </div>
               <p><span className="accent-color">{cart?.numOfCartItems} Items </span> in your cart</p>
             </header>
-            {products.length===0 && isLoading === false && <><div className="bg-blur font-semibold second-color text-base  md:text-lg flex items-center justify-center p-1 h-20 m-3"><span>Looks like you haven’t added anything yet </span></div> </>}
-            {isLoading ?<div className="flex justify-center items-center my-5"> <ImSpinner9  className="size-8 my-5 animate-spin"/></div> : <>
+            {products.length===0 && isLoading === false && <><div className="bg-blur font-semibold second-color text-base  md:text-lg flex items-center justify-center p-1 h-20 m-3"><span>Looks like you haven’t added anything yet</span></div> </>}
+            {isLoading ? <div className="flex justify-center items-center my-5"> <ImSpinner9  className="size-8 my-5 animate-spin"/></div> 
+            : <>
             {products.map((prod , index )=> <CartItem key={index} product={prod} setProducts={setProducts}/> )}
-            </>}
+             </>}
             
           </div>
           {/* CHECKOUT PAYMENT */}

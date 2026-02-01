@@ -8,14 +8,20 @@ import { useContext, useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
 import { cartContext } from "@/providers/cartDataProvider";
 import { redirect } from "next/navigation";
-import { addToProductToWishlist, deleteProductFromWishlist, getUserWishlist } from "@/actions/wishlistAction";
-import { wishlistI } from "@/interfaces/wishlist";
+import { addToProductToWishlist, deleteProductFromWishlist } from "@/actions/wishlistAction";
+import { cartProductI } from "@/interfaces/cart";
 
+interface addToCartType{
+  prodId:string,
+  wishlistPage:true,
+}
+//
 
-export default function AddToCart({prodId , wishlistPage}:{prodId:string , wishlistPage:any}  ) {
+export default function AddToCart({ prodId , wishlistPage }:addToCartType  ) {
+
   const [isLoading , setIsLoading]= useState<boolean>(false)
   const [isWishlisted , setIsWishlisted]= useState<boolean>(false)
-    const {handleCartNumber} = useContext(cartContext)
+  const {handleCartNumber} = useContext(cartContext)
 
  async function addProductToCart(prodId:string) {
    try {
@@ -81,8 +87,8 @@ export default function AddToCart({prodId , wishlistPage}:{prodId:string , wishl
           
           {/* TO REMOVE THE HEART BTN FROM WISHLIST PAGE AND APPLY REMOVE WISHLIST PRODUCT */}
 
-          {wishlistPage ? <button className="cursor-pointer" disabled={isLoading} onClick={()=>{deleteWishlist(prodId)}}><CircleMinusIcon className="text-red-700"/></button> : 
-           <button disabled={isLoading} onClick={()=>{addToWishlist(prodId)}} className="cursor-pointer">
+          {wishlistPage ?<button className="cursor-pointer" disabled={isLoading} onClick={()=>{deleteWishlist(prodId)}}><CircleMinusIcon className="text-red-700"/></button> 
+          : <button disabled={isLoading} onClick={()=>{addToWishlist(prodId)}} className="cursor-pointer">
          <HeartPlus  className={`cursor-pointer transition ${isWishlisted ? "text-red-300 fill-red-700" : ""}`}/></button>  }
      </CardFooter>
    

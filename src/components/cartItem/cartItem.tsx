@@ -33,10 +33,10 @@ export default function CartItem({product , setProducts }:{product:cartProductI 
     const response = await updateCartProduct(prodId , updatedCount)
     console.log(response);
      if(response?.status ==="success"){
-      toast.success("Product Quantity Updated successfully")
+      toast.success("Product Quantity Updated Successfully")
       setProducts(response.data.products)
     }else{
-      toast.error("failed to update product Quantity")
+      toast.error("Failed To Update Product Quantity")
     }
    } catch (error) {
     console.log(error);

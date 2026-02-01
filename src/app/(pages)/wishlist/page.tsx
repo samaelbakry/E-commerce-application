@@ -1,3 +1,4 @@
+"use client"
 import { getUserWishlist } from "@/actions/wishlistAction";
 import AddToCart from "@/components/addToCart/addToCart";
 import {
@@ -11,12 +12,25 @@ import { wishlistI } from "@/interfaces/wishlist";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default async function Wishlist() {
-  const data: wishlistI = await getUserWishlist();
-  const wishlistProducts: productI[] = data.data;
-  console.log(wishlistProducts);
+export default  function Wishlist() {
+  const [wishlistProducts, setWishlistProducts] = useState<productI[]|[]>([])
+
+  async function getWishlist() {
+      const data: wishlistI = await getUserWishlist();
+      setWishlistProducts(data.data)
+      console.log(wishlistProducts);
+  }
+
+  useEffect(() => {
+    getWishlist()
+  }, [])
+  
+
+  
+  // const wishlistProducts: productI[] = data.data;
+  
 
   return (
     <>
@@ -78,8 +92,7 @@ export default async function Wishlist() {
                       <CardDescription className="flex justify-between items-center">
                         <div className="flex items-center gap-2">
                           {[0, 1, 2, 3, 4].map((star, index) => {
-                            const filledStar =
-                              star < Math.round(prod.ratingsAverage);
+                            const filledStar = star < Math.round(prod.ratingsAverage);
                             return (
                               <React.Fragment key={index}>
                                 <Star
