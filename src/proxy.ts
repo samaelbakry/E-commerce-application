@@ -7,7 +7,8 @@ export async function proxy(request:NextRequest) {
     const token = await getToken({ req:request })
     const {pathname} = request.nextUrl
 
-    const authPages = pathname ==="/login" || pathname ==="/register"
+    const authPages = pathname ==="/login" || pathname ==="/register" || pathname ==="/forgetPassword" || pathname ==="/resetPassword" || pathname ==="/verifyRestPassword"
+   
 
     if(token && authPages){
        return NextResponse.redirect(new URL("/" , request.url))
@@ -19,5 +20,5 @@ export async function proxy(request:NextRequest) {
 }
 
 export const config = {
-    matcher:["/brands", "/categories" , "/login" , "/register"]
+    matcher:["/brands", "/categories" , "/login" , "/register", "/forgetPassword" , "/resetPassword" , "/verifyRestPassword"]
 }

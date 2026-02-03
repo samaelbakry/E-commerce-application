@@ -18,29 +18,27 @@ import { signOut, useSession } from "next-auth/react";
 import { Badge } from "../ui/badge";
 import { cartContext } from "@/providers/cartDataProvider";
 export default function Navbar() {
-
-  const {noOfCartItems , handleCartNumber , noOfwishlistItems} = useContext(cartContext)
+  const { noOfCartItems, handleCartNumber, noOfwishlistItems } =
+    useContext(cartContext);
   const path = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { data:sessionData } = useSession();
+  const { data: sessionData } = useSession();
 
-    // const [mounted, setMounted] = useState<boolean>(false);
+  // const [mounted, setMounted] = useState<boolean>(false);
 
   function ToggleMenu() {
     setIsOpen(!isOpen);
   }
-  
+
   useEffect(() => {
     // setMounted(true)
+  }, []);
 
-  }, [])
-
-  function logOut(){
-   setTimeout(() => {
-     signOut({callbackUrl:"/"})
-   }, 1000);
+  function logOut() {
+    setTimeout(() => {
+      signOut({ callbackUrl: "/" });
+    }, 1000);
   }
-  
 
   return (
     <>
@@ -82,66 +80,82 @@ export default function Navbar() {
                 </Link>
               </li>
             </ul>
-
           </div>
           <div className="flex items-center gap-2">
             {/* {mounted && <> */}
-             <DropdownMenu>
+            <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <User className="size-6 md:size-8 cursor-pointer" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-32">
                 <DropdownMenuGroup>
-                  {sessionData? <>
-                  <DropdownMenuItem  className="cursor-pointer">Profile</DropdownMenuItem>
-                  <DropdownMenuItem  className="cursor-pointer">Orders</DropdownMenuItem>
-                  </> : <>
-                    <DropdownMenuItem>
-                    <Link href="/register">Register</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/login">Login</Link>
-                  </DropdownMenuItem>
-                  </>
-                  }
-                
+                  {sessionData ? (
+                    <>
+                      <DropdownMenuItem className="cursor-pointer">
+                        <Link href="/profile">Profile</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer">
+                        <Link href="/orders">Orders</Link>
+                      </DropdownMenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <DropdownMenuItem>
+                        <Link href="/register">Register</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link href="/login">Login</Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem onClick={logOut} variant="destructive" className="cursor-pointer">
+                  <DropdownMenuItem
+                    onClick={logOut}
+                    variant="destructive"
+                    className="cursor-pointer"
+                  >
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-            {sessionData ? <>
-           <span className="relative">
-             <Link href='/wishlist'>
-             <HeartPlus className="size-6 md:size-8 cursor-pointer" />
-             <Badge className="bg-red-50 text-red-700 absolute -top-2 -end-2">{noOfwishlistItems}</Badge>
-           </Link>
-          </span>
-          <span className="relative">
-             <Link href='/cart'>
-             <ShoppingBasket  className="size-6 md:size-8 cursor-pointer"/>
-             <Badge className="bg-red-50 text-red-700 absolute -top-2 -end-2">{noOfCartItems}</Badge>
-           </Link>
-          </span>
-          
-            </> : "" }
-            
+            {sessionData ? (
+              <>
+                <span className="relative">
+                  <Link href="/wishlist">
+                    <HeartPlus className="size-6 md:size-8 cursor-pointer" />
+                    <Badge className="bg-red-50 text-red-700 absolute -top-2 -end-2">
+                      {noOfwishlistItems}
+                    </Badge>
+                  </Link>
+                </span>
+                <span className="relative">
+                  <Link href="/cart">
+                    <ShoppingBasket className="size-6 md:size-8 cursor-pointer" />
+                    <Badge className="bg-red-50 text-red-700 absolute -top-2 -end-2">
+                      {noOfCartItems}
+                    </Badge>
+                  </Link>
+                </span>
+              </>
+            ) : (
+              ""
+            )}
+
             {/* </>} */}
           </div>
-            <div
-              className="md:hidden cursor-pointer transition-all duration-200"
-              onClick={ToggleMenu}
-            >
-              {isOpen ? (
-                <IoIosClose className="size-8" />
-              ) : (
-                <HiBars3 className="size-8" />
-              )}
-            </div>
+          <div
+            className="md:hidden cursor-pointer transition-all duration-200"
+            onClick={ToggleMenu}
+          >
+            {isOpen ? (
+              <IoIosClose className="size-8" />
+            ) : (
+              <HiBars3 className="size-8" />
+            )}
+          </div>
         </div>
       </nav>
 
