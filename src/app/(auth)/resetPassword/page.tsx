@@ -1,65 +1,46 @@
-"use client";
+"use client"
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { loginSchema, loginSchemaType } from "@/lib/authSchema/authSchema";
+import { resetPassSchema, resetPassSchemaType } from "@/lib/authSchema/authSchema";
+import { resetPassword } from "@/services/authServices";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { ImSpinner9 } from "react-icons/im";
 import { toast } from "sonner";
-import {signIn} from "next-auth/react"
-import Link from "next/link";
 
-
-export default function Login() {
-  
-  const navigate = useRouter()
+export default function ResetPassword() {
+    const navigate = useRouter()
     const form = useForm({
     mode: "all",
     defaultValues: {
       email: "",
-      password: "",
+      newPassword: "",
     },
-    resolver:zodResolver(loginSchema)
+    resolver:zodResolver(resetPassSchema)
   });
-  
-  async function sendLogInData(values:loginSchemaType){
-    // const response= await signIn(values)
-    // if(response.message === "success"){
-    //     navigate.push("/")
-    //     toast.success("Logged in Successfully !")
-    // }
-    // console.log(response);
 
-    const response= await signIn("credentials", { // from next auth (for calling authorize fn)
-     email:values.email,
-      password:values.password,
-      redirect:false,
-    })
-    console.log(response)
-    
-    if(response?.ok){
-       toast.success("Logged in Successfully !")
-       console.log(response)
-       setTimeout(() => {
-      navigate.push("/")
-       }, 1000);
+  async function handleResetPassword(values:resetPassSchemaType) {
+    const response = await resetPassword(values)
+    console.log(response);
+     if(response){
+        toast.success("password updated successfully")
+        navigate.push("/login")
     }else{
-      toast.error(response?.error)
+      toast.error(response?.message)
     }
   }
 
-  
-  return <> 
-  <div className="max-w-3xl mx-auto py-5 m-2 md:text-left text-center">
+  return <>
+ <div className="max-w-3xl mx-auto py-5 m-2 md:text-left text-center">
         <h2 className="md:text-4xl text-xl font-semibold accent-color">
-          Good to see you again!
+          Reset Your Password
         </h2>
         <p className="font-semibold second-color my-1">
-          Log in and pick up where you left off
+          enter your email and new password
         </p>
-        <form onSubmit={form.handleSubmit(sendLogInData)} className="bg-blur my-3 space-y-3 p-3 mx-8 md:mx-0">
+        <form onSubmit={form.handleSubmit(handleResetPassword)} className="bg-blur my-3 space-y-3 p-3 mx-8 md:mx-0">
           <Controller
             name="email"
             control={form.control}
@@ -80,11 +61,11 @@ export default function Login() {
             )}
           />
           <Controller
-            name="password"
+            name="newPassword"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                 <FieldLabel htmlFor={field.name}>Password:</FieldLabel>
+                 <FieldLabel htmlFor={field.name}>New Password:</FieldLabel>
                 <Input
                   {...field}
                   id={field.name}
@@ -100,14 +81,12 @@ export default function Login() {
           />
           
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <Link href="/forgetPassword">
-          <span className="hover:underline underline-offset-3 font-bold">Forget password ?</span>
-            </Link>
-             <Button className="font-bold cursor-pointer  text-md ">{form.formState.isSubmitting ? <ImSpinner9  className="size-4 animate-spin"/> : "Login"}</Button>
+             <Button className="font-bold cursor-pointer  text-md ">{form.formState.isSubmitting ?
+              <ImSpinner9  className="size-4 animate-spin"/> : "submit"}</Button>
           </div>
 
         </form>
         
       </div>
   </>
-}//md:translate-x-45
+}

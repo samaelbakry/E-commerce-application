@@ -20,3 +20,24 @@ export const loginSchema = zod.object({
 })
 
 export type loginSchemaType = zod.infer<typeof loginSchema>
+
+
+
+// forget password
+
+export const forgetPassSchema = zod.object({
+    email: zod.email({error:"Please enter a valid email address"}),
+})
+
+export type forgetPassSchemaType = zod.infer<typeof forgetPassSchema>
+
+
+
+//reset password
+export const resetPassSchema = zod.object({
+    email: zod.email({error:"Please enter a valid email address"}),
+    newPassword: zod.string().nonempty("password is required").min(3, "password must be at least 3 characters").max(20, "password must be at most 20 characters"),
+})
+
+export type resetPassSchemaType = zod.infer<typeof resetPassSchema>
+
