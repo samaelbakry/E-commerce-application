@@ -96,7 +96,6 @@ export default function UserData() {
             )}
           />
          <Button className="font-bold cursor-pointer w-1/2 text-md ">{form.formState.isSubmitting ? <ImSpinner9 className="size-4 animate-spin"/> : "change"}</Button>
-
         </div>
     </form>
   </>

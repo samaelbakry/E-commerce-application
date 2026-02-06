@@ -6,7 +6,12 @@ import UserData from "@/components/userData/userData";
 import UserPassword from "@/components/userPassword/userPassword";
 import { IoMdHome } from "react-icons/io";
 import { GrUpdate } from "react-icons/gr";
-
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default async function Profile() {
   const data = await getServerSession(authOptions);
@@ -25,22 +30,46 @@ export default async function Profile() {
           </div>
           <div className="col-span-1 md:col-span-2 bg-blur p-5 m-3">
             <h4 className="text-xl flex gap-2 items-center">
-              <IoMdHome  className="size-5 md:size-8 bg-cyan-600 p-1 rounded-2xl text-cyan-200" />
+              <IoMdHome className="size-5 md:size-8 bg-cyan-600 p-1 rounded-2xl text-cyan-200" />
               Add your address
             </h4>
             <UserAddress />
           </div>
           <div className="col-span-1 md:col-span-2 bg-blur p-5 m-3">
-            <h4 className="text-xl flex gap-2 items-center">
-              <GrUpdate className="size-5 md:size-7 bg-cyan-600 p-1 rounded-2xl text-cyan-200" />
-              Update your data
-              </h4>
-            <UserData />
-            <h4 className="text-xl flex gap-2 items-center">
-              <GrUpdate  className="size-5 md:size-7 bg-cyan-600 p-1 rounded-2xl text-cyan-200" />
-              Update your password
-            </h4>
-            <UserPassword />
+            <Accordion
+              type="single"
+              collapsible
+              defaultValue="shipping"
+              className="max-w-lg" >
+              <AccordionItem value="shipping">
+                <AccordionTrigger>
+                  <h4 className="text-xl flex gap-2 items-center">
+                    <GrUpdate className="size-5 md:size-7 bg-cyan-600 p-1 rounded-2xl text-cyan-200" />
+                    Update your data
+                  </h4>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <UserData />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <Accordion
+              type="single"
+              collapsible
+              defaultValue="shipping"
+              className="max-w-lg">
+              <AccordionItem value="shipping">
+                <AccordionTrigger>
+                  <h4 className="text-xl flex gap-2 items-center">
+                    <GrUpdate className="size-5 md:size-7 bg-cyan-600 p-1 rounded-2xl text-cyan-200" />
+                    Update your password
+                  </h4>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <UserPassword />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </div>

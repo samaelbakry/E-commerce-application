@@ -10,12 +10,12 @@ export async function getAllCategories() {
   }
 }
 
-// export async function getSubCategories() {
-//   try {
-//     const response = await fetch(`${API_URL}/subcategories`);
-//     const data = await response.json();
-//     return data
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+export async function getSpecificCategory(id:string) {
+  try {
+    const response = await fetch(`${API_URL}/categories/${id}`);
+    const data = await response.json();
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}

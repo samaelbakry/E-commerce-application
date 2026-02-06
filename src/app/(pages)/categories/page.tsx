@@ -22,9 +22,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Categories() {
+
   const { data } = await getAllCategories()
   const category:CategoryI[] = data
+
   return <>
+
    <header>
         <div className="max-w-7xl mx-auto p-3 my-3 bg-blur flex justify-between">
           <div className="flex flex-col gap-2 items-start m-2">

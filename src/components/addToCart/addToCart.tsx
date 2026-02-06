@@ -11,13 +11,13 @@ import { redirect } from "next/navigation";
 import { addToProductToWishlist, deleteProductFromWishlist } from "@/actions/wishlistAction";
 import { cartProductI } from "@/interfaces/cart";
 
-interface addToCartType{
+interface addToCartI{
   prodId:string,
-  wishlistPage:true,
+  wishlistPage?:boolean,
 }
 //
 
-export default function AddToCart({ prodId , wishlistPage }:addToCartType  ) {
+export default function AddToCart({ prodId , wishlistPage }:addToCartI ) {
 
   const [isLoading , setIsLoading]= useState<boolean>(false)
   const [isWishlisted , setIsWishlisted]= useState<boolean>(false)
