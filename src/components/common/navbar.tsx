@@ -74,7 +74,7 @@ export default function Navbar() {
               <li>
                 <Link
                   href="/categories"
-                  className={path === "/categories" ? "active" : ""}
+                  className={path.includes("/categories")  ? "active" : ""}
                 >
                   categories
                 </Link>
