@@ -41,7 +41,7 @@ export default async function SpecificCategory({ params }: { params: Promise<cat
             {productCategory.map((prod) => (
               <div key={prod._id} className="col-span-1 mx-auto pt-2 relative">
                 <Card className="relative mx-auto md:w-full bg-blur pt-0 mt-2 md:h-140 h-120 hover:scale-105 duration-500 cursor-pointer w-100">
-                  {/* <Link href={`/products/${prod.id}`}> */}
+                  <Link href={`/products/${prod._id}`}>
                   <Image
                     src={prod.imageCover}
                     width={300}
@@ -78,7 +78,7 @@ export default async function SpecificCategory({ params }: { params: Promise<cat
                     </CardDescription>
                      <AddToCart prodId={prod._id} />
                   </CardHeader>
-                  {/* </Link> */}
+                  </Link>
                 </Card>
               </div>
             ))}

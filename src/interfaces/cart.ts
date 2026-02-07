@@ -28,4 +28,5 @@ export interface cartQuantityI{
   handleCartNumber:()=>void
   noOfCartItems: number
   noOfwishlistItems: number
+  isLoading:boolean
 }

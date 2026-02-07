@@ -1,12 +1,21 @@
+"use client"
 import { deleteCartProduct, updateCartProduct } from "@/actions/cartAction";
 import { cartProductI } from "@/interfaces/cart";
+import { cartContext } from "@/providers/cartDataProvider";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
 import { toast } from "sonner";
 
-export default function CartItem({product , setProducts }:{product:cartProductI , setProducts:(products:cartProductI[])=>void}) {
+interface cartItemsPropsI{
+product:cartProductI,
+setProducts:(products:cartProductI[])=>void
+}
+
+export default function CartItem({product , setProducts }:cartItemsPropsI) {
+
+   const { handleCartNumber } =useContext(cartContext);
   const [isLoading , setIsLoading]= useState<boolean>(false)
 
  async function deleteProduct(prodId:string) {
@@ -17,6 +26,7 @@ export default function CartItem({product , setProducts }:{product:cartProductI 
      if(response?.status ==="success"){
       toast.success("Product Removed Successfully")
       setProducts(response.data.products)
+      handleCartNumber()
     }else{
       toast.error("Failed To Remove Product")
     }
@@ -35,6 +45,7 @@ export default function CartItem({product , setProducts }:{product:cartProductI 
      if(response?.status ==="success"){
       toast.success("Product Quantity Updated Successfully")
       setProducts(response.data.products)
+      handleCartNumber()
     }else{
       toast.error("Failed To Update Product Quantity")
     }

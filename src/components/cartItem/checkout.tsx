@@ -7,15 +7,14 @@ import { useContext, useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
 import { toast } from "sonner";
 
-interface CheckoutProps {
+interface CheckoutI {
   setProducts: (products: cartProductI[]) => void
   Cart: cartI | null
   CartData: cartDataI | null
 }
 
-//{setProducts:(products:cartProductI[])=>void}
 
-export default function Checkout({setProducts , Cart , CartData}:CheckoutProps ) {
+export default function Checkout({setProducts , Cart , CartData}:CheckoutI) {
     const [isLoading , setIsLoading]= useState<boolean>(false)
     const {handleCartNumber} = useContext(cartContext)
 

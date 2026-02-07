@@ -38,8 +38,11 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 body {
-  font-family: var(--font-Dosis-sans);
+  /* font-family: var(--font-Dosis-sans); */
   background-color: rgb(239, 238, 238);
+}
+ html {
+  font-family: var(--font-Dosis-sans), sans-serif;
 }
 
 @layer utilities{

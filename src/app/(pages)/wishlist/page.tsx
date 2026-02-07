@@ -18,19 +18,15 @@ export default  function Wishlist() {
   const [wishlistProducts, setWishlistProducts] = useState<productI[] | []>([])
 
   async function getWishlist() {
-      const data: wishlistI = await getUserWishlist();
-      // setWishlistProducts(data.data)
-       setWishlistProducts(Array.isArray(data.data) ? data.data : []);
+      const data: wishlistI= await getUserWishlist();
+      setWishlistProducts(data.data)
+      //  setWishlistProducts(Array.isArray(data.data) ? data.data : []);
       console.log(wishlistProducts);
   }
 
   useEffect(() => {
     getWishlist()
   }, [])
-  
-
-  
-  // const wishlistProducts: productI[] = data.data;
   
 
   return (
@@ -86,7 +82,7 @@ export default  function Wishlist() {
 
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
-                        Title: {prod.title.split(" ", 3).join(" ")}
+                        Title: {prod.title.split(" " , 3).join("")}
                         <span>{prod.brand.name}</span>
                       </CardTitle>
                       <span>{prod.category.name}</span>

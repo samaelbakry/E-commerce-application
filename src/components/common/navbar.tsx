@@ -17,22 +17,19 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { Badge } from "../ui/badge";
 import { cartContext } from "@/providers/cartDataProvider";
+import { Spinner } from "../ui/spinner";
 export default function Navbar() {
-  const { noOfCartItems, handleCartNumber, noOfwishlistItems } =
+  const { noOfCartItems, handleCartNumber, noOfwishlistItems , isLoading } =
     useContext(cartContext);
   const path = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { data: sessionData } = useSession();
 
-  // const [mounted, setMounted] = useState<boolean>(false);
 
   function ToggleMenu() {
     setIsOpen(!isOpen);
   }
 
-  useEffect(() => {
-    // setMounted(true)
-  }, []);
 
   function logOut() {
     setTimeout(() => {
@@ -82,7 +79,7 @@ export default function Navbar() {
             </ul>
           </div>
           <div className="flex items-center gap-2">
-            {/* {mounted && <> */}
+           
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <User className="size-6 md:size-8 cursor-pointer" />
@@ -127,24 +124,31 @@ export default function Navbar() {
                   <Link href="/wishlist">
                     <HeartPlus className="size-6 md:size-8 cursor-pointer" />
                     <Badge className="bg-red-50 text-red-700 absolute -top-2 -end-2">
+                      {isLoading ? <Spinner/>  :
+                       <>
                       {noOfwishlistItems}
+                       </>}
                     </Badge>
+               
+                    
                   </Link>
                 </span>
                 <span className="relative">
                   <Link href="/cart">
-                    <ShoppingBasket className="size-6 md:size-8 cursor-pointer" />
+                   <ShoppingBasket className="size-6 md:size-8 cursor-pointer" />
+                  
                     <Badge className="bg-red-50 text-red-700 absolute -top-2 -end-2">
+                      {isLoading ? <Spinner/>   : 
+                      <> 
                       {noOfCartItems}
-                    </Badge>
+                      </>}
+                      </Badge>
                   </Link>
                 </span>
               </>
-            ) : (
-              ""
-            )}
+            ) : ("")}
 
-            {/* </>} */}
+       
           </div>
           <div
             className="md:hidden cursor-pointer transition-all duration-200"
