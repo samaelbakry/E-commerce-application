@@ -15,11 +15,12 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default  function Wishlist() {
-  const [wishlistProducts, setWishlistProducts] = useState<productI[]|[]>([])
+  const [wishlistProducts, setWishlistProducts] = useState<productI[] | []>([])
 
   async function getWishlist() {
       const data: wishlistI = await getUserWishlist();
-      setWishlistProducts(data.data)
+      // setWishlistProducts(data.data)
+       setWishlistProducts(Array.isArray(data.data) ? data.data : []);
       console.log(wishlistProducts);
   }
 
@@ -73,7 +74,7 @@ export default  function Wishlist() {
             {wishlistProducts.map((prod) => (
               <div key={prod._id}>
                 <Card className="relative mx-auto md:w-full bg-blur pt-0 mt-2 md:h-140 h-120 hover:scale-105 duration-500 cursor-pointer w-100">
-                  <Link href={`/products/${prod.id}`}>
+                  <Link href={`/products/${prod._id}`}>
                     <div className="relative" />
                     <Image
                       src={prod.imageCover}
@@ -111,7 +112,7 @@ export default  function Wishlist() {
                       </CardDescription>
                     </CardHeader>
                   </Link>
-                  <AddToCart prodId={prod._id} wishlistPage />
+                  <AddToCart prodId={prod._id} wishlistPage wishlistProducts={wishlistProducts} setWishlistProducts={setWishlistProducts} />
                 </Card>
               </div>
             ))}

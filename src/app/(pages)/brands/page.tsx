@@ -24,7 +24,7 @@ import Link from "next/link";
 export default async function Brands() {
 
   const {data} = await getAllBrands()
-  const brands:BrandI[] = data
+  const brands:BrandI[] = await data
 
   return <>
    <header>

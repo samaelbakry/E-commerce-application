@@ -24,7 +24,7 @@ import Link from "next/link";
 export default async function Categories() {
 
   const { data } = await getAllCategories()
-  const category:CategoryI[] = data
+  const category:CategoryI[] = await data
 
   return <>
 

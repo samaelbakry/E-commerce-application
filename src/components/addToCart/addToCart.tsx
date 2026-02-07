@@ -10,14 +10,18 @@ import { cartContext } from "@/providers/cartDataProvider";
 import { redirect } from "next/navigation";
 import { addToProductToWishlist, deleteProductFromWishlist } from "@/actions/wishlistAction";
 import { cartProductI } from "@/interfaces/cart";
+import { productI } from "@/interfaces/products";
+import { wishlistI } from "@/interfaces/wishlist";
 
 interface addToCartI{
   prodId:string,
   wishlistPage?:boolean,
+  wishlistProducts?:productI[]
+  setWishlistProducts?:(data:wishlistI[])=>void
 }
-//
 
-export default function AddToCart({ prodId , wishlistPage }:addToCartI ) {
+
+export default function AddToCart({ prodId , wishlistPage , wishlistProducts , setWishlistProducts}:addToCartI ) {
 
   const [isLoading , setIsLoading]= useState<boolean>(false)
   const [isWishlisted , setIsWishlisted]= useState<boolean>(false)
@@ -44,13 +48,26 @@ export default function AddToCart({ prodId , wishlistPage }:addToCartI ) {
 
 
  async function addToWishlist(prodId:string) {
+
+  const alreadyOnWishlist = wishlistProducts?.some(
+    (prod) => prod._id === prodId
+  );
+
+  if (alreadyOnWishlist) {
+    toast.info("Product already in your wishlist");
+    return; 
+  }
+  
+
    try {
     setIsLoading(true)
     const response = await addToProductToWishlist(prodId)
     console.log(response);
+
      if(response?.status ==="success"){
       toast.success(response?.message)
       setIsWishlisted(true)
+      setWishlistProducts?.(response.data)
     }else{
       toast.error("Failed To Add to wishlist")
     }
@@ -69,6 +86,7 @@ export default function AddToCart({ prodId , wishlistPage }:addToCartI ) {
     console.log(response);
      if(response?.status ==="success"){
       toast.success(response?.message)
+      setWishlistProducts?.(response.data)
     }else{
       toast.error("Failed remove product")
     }
@@ -85,7 +103,7 @@ export default function AddToCart({ prodId , wishlistPage }:addToCartI ) {
         <Button disabled={isLoading} onClick={()=>{addProductToCart(prodId)}} className="w-1/2 grow cursor-pointer">
           {isLoading ? <ImSpinner9  className="size-4 animate-spin"/>  : <><ShoppingCart/>Add to Cart</>}</Button>
           
-          {/* TO REMOVE THE HEART BTN FROM WISHLIST PAGE AND APPLY REMOVE WISHLIST PRODUCT */}
+          {/* TO REMOVE THE HEART BTN FROM WISHLIST PAGE AND APPLY REMOVE WISHLIST BTN */}
 
           {wishlistPage ?<button className="cursor-pointer" disabled={isLoading} onClick={()=>{deleteWishlist(prodId)}}><CircleMinusIcon className="text-red-700"/></button> 
           : <button disabled={isLoading} onClick={()=>{addToWishlist(prodId)}} className="cursor-pointer">
