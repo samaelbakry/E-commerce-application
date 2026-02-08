@@ -15,7 +15,7 @@ setProducts:(products:cartProductI[])=>void
 
 export default function CartItem({product , setProducts }:cartItemsPropsI) {
 
-   const { handleCartNumber } =useContext(cartContext);
+  const { handleCartNumber } =useContext(cartContext);
   const [isLoading , setIsLoading]= useState<boolean>(false)
 
  async function deleteProduct(prodId:string) {
@@ -63,7 +63,7 @@ export default function CartItem({product , setProducts }:cartItemsPropsI) {
         <div className="flex items-center md:gap-2 gap-0">
           <Image src={product.product.imageCover} width={150} height={150} alt={product.product.title} className="object-cover p-4 rounded-3xl" />
           <div className="flex flex-col gap-3">
-            <span>{product.product.title}</span>
+            <span>{product.product.title.split("" , 25).join("")}</span>
             <span>{ product.product.brand.name}. {product.product.category.name}</span>
             <div className="flex items-center gap-2">
               <Minus onClick={()=>{updateProduct(product.product._id , product.count-1)}} className="size-6 bg-gray-200 shadow rounded-lg p-1 text-lg cursor-pointer hover:scale-105" />

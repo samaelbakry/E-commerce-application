@@ -19,9 +19,11 @@ export default  function Wishlist() {
 
   async function getWishlist() {
       const data: wishlistI= await getUserWishlist();
+      console.log(data);
+      
       setWishlistProducts(data.data)
       //  setWishlistProducts(Array.isArray(data.data) ? data.data : []);
-      console.log(wishlistProducts);
+      
   }
 
   useEffect(() => {
@@ -79,7 +81,6 @@ export default  function Wishlist() {
                       alt="product-cover-image"
                       className="relative object-contain rounded-2xl p-2 w-75 h-75 md:w-100 md:h-100"
                     />
-
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
                         Title: {prod.title.split(" " , 3).join("")}

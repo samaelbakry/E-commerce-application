@@ -29,12 +29,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children,}: Readonly<{ children: React.ReactNode;}>) {
+
   return (
     <html lang="en">
       <body className={`${DosisSans.className} antialiased`} >
        <AuthProvider>
          <CartDataProvider>
-          <Navbar />
+          <Navbar/>
            <main className="min-h-[calc(100vh-240px)]">
             {children}
             <Toaster richColors position="top-right"/>

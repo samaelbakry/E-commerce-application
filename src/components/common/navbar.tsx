@@ -18,6 +18,8 @@ import { signOut, useSession } from "next-auth/react";
 import { Badge } from "../ui/badge";
 import { cartContext } from "@/providers/cartDataProvider";
 import { Spinner } from "../ui/spinner";
+
+
 export default function Navbar() {
   const { noOfCartItems, handleCartNumber, noOfwishlistItems , isLoading } =
     useContext(cartContext);
@@ -29,6 +31,8 @@ export default function Navbar() {
   function ToggleMenu() {
     setIsOpen(!isOpen);
   }
+
+  
 
 
   function logOut() {

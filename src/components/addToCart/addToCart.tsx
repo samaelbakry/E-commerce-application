@@ -77,11 +77,11 @@ export default function AddToCart({ prodId,wishlistPage,wishlistProducts,setWish
   async function deleteWishlist(prodId: string) {
     try {
       setIsLoading(true);
-      const response = await deleteProductFromWishlist(prodId);
-      console.log(response);
-      if (response?.status === "success") {
-        toast.success(response?.message);
-        setWishlistProducts?.(response.data);
+      const data = await deleteProductFromWishlist(prodId);
+      if (data?.status === "success") {
+        toast.success(data?.message);
+        console.log(data.data);
+        setWishlistProducts?.(data.data);
          handleCartNumber();
       } else {
         toast.error("Failed remove product");

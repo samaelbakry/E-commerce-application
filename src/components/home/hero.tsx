@@ -1,16 +1,33 @@
 "use client";
+import { productI } from "@/interfaces/products";
+import { getAllProducts } from "@/services/productsServices";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import SplitText from "gsap/SplitText";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(SplitText);
 
 export default function Hero() {
+
   const ref = useRef<HTMLDivElement>(null);
   const { data: sessionData } = useSession();
+  const [products, setProducts] = useState<productI[] | []>([])
+
+  async function getProducts() {
+    const {data} = await getAllProducts()
+    setProducts(data.data)
+    console.log(products);
+  }
+  useEffect(() => {
+    getProducts()
+  }, [])
+
+  
+  
 
   useGSAP(
     () => {
@@ -39,42 +56,49 @@ export default function Hero() {
         stagger: 0.1,
       });
     },
-    { scope: ref }
+    { scope: ref },
+
   );
 
   return (
-  
-     <main ref={ref}>
-       <div className="max-w-6xl mx-auto py-10 m-3" id="home">
-          <div className="flex flex-col justify-center items-center gap-2">
-           <h1 className="title md:text-6xl lg:text-7xl text-4xl max-w-fit accent-color font-semibold duration-500">
-             welcome {sessionData?.user?.name ?? "Guest"} to GoCart
+    <main ref={ref}>
+      <div className="max-w-6xl mx-auto py-10 m-3" id="home">
+        <div className=" mt-10 flex flex-col justify-center items-center flex-wrap gap-3">
+          <h1 className="title md:text-5xl lg:text-7xl text-2xl accent-color font-semibold duration-500">
+            Welcome {sessionData?.user?.name ?? "Guest"} to GoCart
           </h1>
-           <p className="text-xl text-gray-700 paragraph">Everything You Love, One Click Away</p>
-            <div className="flex items-center gap-2 mt-4">
-                <Link href="/products">
-            <button className="btn bg-gray-800 text-xl text-white px-4 py-1 rounded-2xl shadow cursor-pointer">
-               Shop now !
-            </button>
-           </Link>
-          {sessionData ? <>
-            <Link href="/orders">
-            <button className="btn text-gray-800 text-xl bg-white px-4 py-1 rounded-2xl shadow cursor-pointer">
-              Orders
-            </button>
-           </Link>
-          </> : <>
-          <Link href='/register'>
-              <button className="btn text-gray-800 text-xl bg-white px-4 py-1 rounded-2xl shadow cursor-pointer">
-                Create account
+          <p className="text-sm md:text-base text-center text-gray-700 paragraph">Our e-commerce platform is designed to give you a smooth, fast, and enjoyable shopping experience from the moment you land on the page. <br /> Browse a wide range of high-quality products, explore detailed
+            categories, and enjoy a clean, modern interface built to save your time
+          </p>
+          <p className="text-xl paragraph">
+            Everything You Love, One Click Away
+          </p>
+          <div className="flex items-center gap-2 mt-4">
+            <Link href="/products">
+              <button className="btn bg-gray-800 text-xl text-white px-4 py-1 rounded-2xl shadow cursor-pointer">
+                Shop now !
               </button>
-             </Link>
-          </>}
-
-             
-           </div>
-           </div>
+            </Link>
+            {sessionData ? (
+              <>
+                <Link href="/orders">
+                  <button className="btn text-gray-800 text-xl bg-white px-4 py-1 rounded-2xl shadow cursor-pointer">
+                    Orders
+                  </button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href="/register">
+                  <button className="btn text-gray-800 text-xl bg-white px-4 py-1 rounded-2xl shadow cursor-pointer">
+                    Create account
+                  </button>
+                </Link>
+              </>
+            )}
+          </div>
         </div>
-       </main>
+      </div>
+    </main>
   );
 }
