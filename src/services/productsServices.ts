@@ -21,3 +21,19 @@ export async function getSpecificProduct(id:string) {
     console.log(error);
   }
 }
+
+export async function getUserOrders(id:string) {
+    try {
+       const response = await fetch(`${API_URL}/orders/user/${id}`,{
+        headers:{
+            "Content-Type":"application/json"
+        }
+       }
+       )
+       const data = await response.json()
+       return data    
+    } catch (error) {
+        console.log(error)
+    }
+    
+}

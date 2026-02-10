@@ -4,6 +4,7 @@ import { getAllProducts } from "@/services/productsServices";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import SplitText from "gsap/SplitText";
+import { Gem, MessageCirclePlus, ShieldCheck, Truck } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,7 +54,7 @@ export default function Hero() {
         opacity: 0,
         scale: 0.9,
         delay: 0.8,
-        stagger: 0.1,
+        stagger: 0.4,
       });
     },
     { scope: ref },
@@ -81,7 +82,7 @@ export default function Hero() {
             </Link>
             {sessionData ? (
               <>
-                <Link href="/orders">
+                <Link href="/allorders">
                   <button className="btn text-gray-800 text-xl bg-white px-4 py-1 rounded-2xl shadow cursor-pointer">
                     Orders
                   </button>
@@ -97,6 +98,46 @@ export default function Hero() {
               </>
             )}
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-2">
+            <div className="btn flex items-center gap-2 bg-blur p-2 text-gray-600 rounded-2xl shadow capitalize">
+            <div>
+              <Truck className="text-green-800 md:size-9"/>
+            </div>
+           <div className="flex flex-col">
+             <span className="font-bold text-green-800">free shipping</span>
+            <span>for all order above 400 EGP</span>
+           </div>
+          </div>
+            <div className="btn flex items-center gap-2 bg-blur p-2 text-gray-600  rounded-2xl shadow capitalize">
+            <div>
+              <ShieldCheck className="text-blue-800 md:size-9"/>
+            </div>
+           <div className="flex flex-col">
+             <span className="font-bold text-blue-800">secure payment</span>
+            <span>all transactions are secured and encrypted </span>
+           </div>
+          </div>
+            <div className="btn flex items-center gap-2 bg-blur p-2 text-gray-600  rounded-2xl shadow capitalize">
+            <div>
+             <MessageCirclePlus className="text-red-700 md:size-9" />
+            </div>
+           <div className="flex flex-col">
+             <span className="font-bold text-red-700">customer care</span>
+            <span>get support 24/7 via phone or email</span>
+           </div>
+          </div>
+            <div className="btn flex items-center gap-2 bg-blur p-2 text-gray-600 rounded-2xl shadow capitalize">
+            <div>
+              <Gem className="text-violet-600 md:size-9" />
+            </div>
+           <div className="flex flex-col">
+             <span className="font-bold text-violet-600">best prices</span>
+            <span>we offer the best price for our products</span>
+           </div>
+          </div>
+
+          </div>
+          
         </div>
       </div>
     </main>

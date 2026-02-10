@@ -21,19 +21,15 @@ import { Spinner } from "../ui/spinner";
 
 
 export default function Navbar() {
-  const { noOfCartItems, handleCartNumber, noOfwishlistItems , isLoading } =
-    useContext(cartContext);
+  const { noOfCartItems, noOfwishlistItems , isLoading } =
+  useContext(cartContext);
   const path = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { data: sessionData } = useSession();
 
-
   function ToggleMenu() {
     setIsOpen(!isOpen);
   }
-
-  
-
 
   function logOut() {
     setTimeout(() => {
@@ -83,7 +79,6 @@ export default function Navbar() {
             </ul>
           </div>
           <div className="flex items-center gap-2">
-           
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <User className="size-6 md:size-8 cursor-pointer" />
@@ -96,7 +91,7 @@ export default function Navbar() {
                         <Link href="/profile">Profile</Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem className="cursor-pointer">
-                        <Link href="/orders">Orders</Link>
+                        <Link href="/allorders">Orders</Link>
                       </DropdownMenuItem>
                     </>
                   ) : (
@@ -151,8 +146,6 @@ export default function Navbar() {
                 </span>
               </>
             ) : ("")}
-
-       
           </div>
           <div
             className="md:hidden cursor-pointer transition-all duration-200"

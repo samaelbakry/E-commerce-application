@@ -73,7 +73,7 @@ export default function CartItem({product , setProducts }:cartItemsPropsI) {
             <span className="text-gray-500">Price of {product.count <=1 ? `${product.count} item` : `${product.count} items` }</span>
           </div>
         </div>
-        <div className="flex flex-row sm:flex-col items-center translate-x-6 sm:translate-0 m-3 gap-10 ">
+        <div className="flex flex-row sm:flex-col items-center flex-wrap translate-x-6 sm:translate-0 m-3 gap-10 ">
           <span>{product.price * product.count} EGP</span>
           <button onClick={()=>{deleteProduct(product.product._id)}} className="delete-btn flex items-center gap-0.5">
            {isLoading  ? <ImSpinner9  className="size-4 animate-spin"/>  : <> Remove <Trash2 /></>}

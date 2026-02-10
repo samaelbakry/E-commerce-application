@@ -39,3 +39,13 @@ export const addressSchema = zod.object({
 })
 
 export type addressSchemaType = zod.infer<typeof addressSchema>
+
+export const checkoutSchema = zod.object({
+    details: zod.string().min(5, "Details must be at least 5 characters").trim(),
+    phone:zod.string().nonempty("Phone is required").regex(/^01[1250][0-9]{8}$/ , "Phone number must be 11 digits"),
+    city:zod.enum(egyptCities as [string, ...string[]]),
+    type:zod.string("cash"),
+})
+
+export type checkoutSchemaType = zod.infer<typeof checkoutSchema>
+

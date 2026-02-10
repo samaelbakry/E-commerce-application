@@ -38,7 +38,7 @@ export default function RootLayout({ children,}: Readonly<{ children: React.Reac
           <Navbar/>
            <main className="min-h-[calc(100vh-240px)]">
             {children}
-            <Toaster richColors position="top-right"/>
+            <Toaster richColors position="top-center"/>
             </main>
             <Footer/>
          </CartDataProvider>

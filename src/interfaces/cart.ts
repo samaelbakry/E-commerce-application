@@ -29,4 +29,5 @@ export interface cartQuantityI{
   noOfCartItems: number
   noOfwishlistItems: number
   isLoading:boolean
+  data?:cartI
 }
