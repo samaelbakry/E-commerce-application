@@ -15,7 +15,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default  function Wishlist() {
-  const [wishlistProducts, setWishlistProducts] = useState<productI[] | []>([])
+  const [wishlistProducts, setWishlistProducts] = useState<productI[]>([])
 
   async function getWishlist() {
       const data: wishlistI= await getUserWishlist();

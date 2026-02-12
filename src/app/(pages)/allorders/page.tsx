@@ -26,7 +26,7 @@ const id: string | undefined = data?.data?.cartOwner;
   return <>
   <div className="max-w-7xl border border-gray-300 rounded-2xl mx-auto mb-5 mt-5 grid grid-cols-1 md:grid-cols-2 gap-4 md:p-5">
   {orders.map((order) => (
-    <div key={order._id} className="flex justify-between gap-5 p-5 bg-blur rounded-2xl">
+    <div key={order._id} className="flex justify-evenly gap-5 p-5 bg-blur rounded-2xl w-full">
       <div className="flex flex-wrap gap-4">
         {order.cartItems.map((item) => (
           <div key={item._id} className="flex flex-col items-center">
@@ -37,7 +37,7 @@ const id: string | undefined = data?.data?.cartOwner;
               height={100}
               alt={item.product.title}
             />
-            <span className="text-sm mt-1">{item.product.category.name}</span>
+            <span className="text-sm mt-1">{item.product.brand.name}</span>
           </div>
         ))}
       </div>
@@ -48,7 +48,7 @@ const id: string | undefined = data?.data?.cartOwner;
         <span><strong>Phone:</strong> {order.shippingAddress.phone}</span>
         <span><strong>City:</strong> {order.shippingAddress.city}</span>
         <span><strong>Payment Method:</strong> {order.paymentMethodType}</span>
-        <span><strong>Total Price:</strong> {order.totalOrderPrice}</span>
+        <span><strong>Total Price:</strong> {order.totalOrderPrice} EGP</span>
       </div>
 
     </div>

@@ -18,7 +18,7 @@ interface addToCartI {
   setWishlistProducts?: (data: productI[]) => void;
 }
 
-export default function AddToCart({ prodId,wishlistPage,wishlistProducts,setWishlistProducts}: addToCartI) {
+export default function AddToCart({ prodId , wishlistPage , wishlistProducts , setWishlistProducts }: addToCartI) {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isWishlisted, setIsWishlisted] = useState<boolean>(false);
@@ -81,7 +81,8 @@ export default function AddToCart({ prodId,wishlistPage,wishlistProducts,setWish
       if (data?.status === "success") {
         toast.success(data?.message);
         console.log(data.data);
-        setWishlistProducts?.(data.data);
+        // setWishlistProducts?.(data.data);
+         setWishlistProducts?.(wishlistProducts!.filter((prod) => prod._id !== prodId) )
          handleCartNumber();
       } else {
         toast.error("Failed remove product");
