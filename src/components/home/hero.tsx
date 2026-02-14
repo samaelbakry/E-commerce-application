@@ -16,19 +16,6 @@ export default function Hero() {
 
   const ref = useRef<HTMLDivElement>(null);
   const { data: sessionData } = useSession();
-  const [products, setProducts] = useState<productI[] | []>([])
-
-  async function getProducts() {
-    const {data} = await getAllProducts()
-    setProducts(data.data)
-    console.log(products);
-  }
-  useEffect(() => {
-    getProducts()
-  }, [])
-
-  
-  
 
   useGSAP(
     () => {
@@ -39,7 +26,6 @@ export default function Hero() {
       gsap.from(split.chars, {
         yPercent: 100,
         opacity: 0,
-        // stagger: 0.04,
         duration: 1,
         ease: "expo.out",
       });

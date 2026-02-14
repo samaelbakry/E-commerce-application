@@ -23,9 +23,11 @@ interface CheckoutI {
 
 
 export default function Checkout({ setProducts, Cart, CartData }: CheckoutI) {
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { handleCartNumber } = useContext(cartContext);
   const cartId = Cart?.cartId as string
+
   const form = useForm({
     mode: "all",
     defaultValues: {
@@ -66,10 +68,7 @@ export default function Checkout({ setProducts, Cart, CartData }: CheckoutI) {
         phone:values.phone,
         city:values.city
     }
-
     try {
-    
-    
     if(values.type === "cash"){
           const data = await addCashOrder(cartId, userOrder)
           console.log(data);
@@ -200,7 +199,7 @@ export default function Checkout({ setProducts, Cart, CartData }: CheckoutI) {
                 </RadioGroup>
               )}
             />
-               <button className="bg-gray-100 w-full font-semibold accent-color md:px-3 py-1 px-2 text-lg rounded-lg cursor-pointer duration-600 mb-2 shadow hover:bg-cyan-700 hover:text-white">
+            <button className="bg-gray-100 w-full font-semibold accent-color md:px-3 py-1 px-2 text-lg rounded-lg cursor-pointer duration-600 mb-2 shadow hover:bg-cyan-700 hover:text-white">
               PAY Now!
             </button>
           </div>

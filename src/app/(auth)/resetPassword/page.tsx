@@ -11,6 +11,7 @@ import { ImSpinner9 } from "react-icons/im";
 import { toast } from "sonner";
 
 export default function ResetPassword() {
+  
     const navigate = useRouter()
     const form = useForm({
     mode: "all",

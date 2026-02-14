@@ -11,7 +11,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function Register() {
-    const navigate = useRouter()
+  
+  const navigate = useRouter()
   const form  = useForm({
     mode: "all",
     defaultValues: {

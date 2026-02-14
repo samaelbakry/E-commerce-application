@@ -19,6 +19,7 @@ export default function CartItem({product , setProducts }:cartItemsPropsI) {
   const [isLoading , setIsLoading]= useState<boolean>(false)
 
  async function deleteProduct(prodId:string) {
+
    try {
     setIsLoading(true)
     const response = await deleteCartProduct(prodId)
@@ -35,9 +36,11 @@ export default function CartItem({product , setProducts }:cartItemsPropsI) {
    }finally{
     setIsLoading(false)
    }
+
   }
 
  async function updateProduct(prodId:string , updatedCount:number) {
+
    try {
     setIsLoading(true)
     const response = await updateCartProduct(prodId , updatedCount)
@@ -54,6 +57,7 @@ export default function CartItem({product , setProducts }:cartItemsPropsI) {
    }finally{
     setIsLoading(false)
    }
+   
   }
   
 

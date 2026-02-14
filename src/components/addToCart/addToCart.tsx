@@ -25,6 +25,7 @@ export default function AddToCart({ prodId , wishlistPage , wishlistProducts , s
   const { handleCartNumber } = useContext(cartContext);
 
   async function addProductToCart(prodId: string) {
+
     try {
       setIsLoading(true);
       const response = await addProduct(prodId);
@@ -44,10 +45,10 @@ export default function AddToCart({ prodId , wishlistPage , wishlistProducts , s
   }
 
   async function addToWishlist(prodId: string) {
+
     const alreadyOnWishlist = wishlistProducts?.some(
       (prod) => prod._id === prodId,
     );
-
     if (alreadyOnWishlist) {
       toast.info("Product already in your wishlist");
       return;
@@ -72,16 +73,16 @@ export default function AddToCart({ prodId , wishlistPage , wishlistProducts , s
     } finally {
       setIsLoading(false);
     }
+
   }
 
   async function deleteWishlist(prodId: string) {
+
     try {
       setIsLoading(true);
       const data = await deleteProductFromWishlist(prodId);
       if (data?.status === "success") {
-        toast.success(data?.message);
-        console.log(data.data);
-        // setWishlistProducts?.(data.data);
+         toast.success(data?.message);
          setWishlistProducts?.(wishlistProducts!.filter((prod) => prod._id !== prodId) )
          handleCartNumber();
       } else {
@@ -92,6 +93,7 @@ export default function AddToCart({ prodId , wishlistPage , wishlistProducts , s
     } finally {
       setIsLoading(false);
     }
+    
   }
 
   return (

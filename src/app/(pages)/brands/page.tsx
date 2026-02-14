@@ -7,15 +7,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { BrandI } from "@/interfaces/brands";
 import { getAllBrands } from "@/services/brandsServices";
 import Image from "next/image";
@@ -46,39 +37,13 @@ export default async function Brands() {
               </BreadcrumbList>
             </Breadcrumb>
           </div>
-          <div className="flex flex-col justify-end">
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious href="#" />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">1</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#" isActive>
-                    2
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">3</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationNext href="#" />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          </div>
         </div>
    </header>
 
       <div className="max-w-7xl bg-blur mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:p-4">
         {brands.map((brand)=>(
           <div key={brand._id}>
-            <Card className="relative mx-auto md:w-full bg-blur pt-0 mt-2 h-full w-90 hover:scale-105 duration-500 cursor-pointer">
+            <Card className="relative mx-auto md:w-full bg-white/60 hover:shadow-2xl border border-gray-200 pt-0 mt-2 h-full w-90 hover:scale-105 duration-500 cursor-pointer">
                 <Link href={`/brands/${brand._id}`}>
                   <div className="relative" />
                   <Image src={brand.image} width={400} height={400} alt="brand-cover-image"className="relative  object-contain rounded-2xl p-2"

@@ -4,7 +4,7 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { loginSchema, loginSchemaType } from "@/lib/authSchema/authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { ImSpinner9 } from "react-icons/im";
 import { toast } from "sonner";
@@ -25,13 +25,7 @@ export default function Login() {
   });
   
   async function sendLogInData(values:loginSchemaType){
-    // const response= await signIn(values)
-    // if(response.message === "success"){
-    //     navigate.push("/")
-    //     toast.success("Logged in Successfully !")
-    // }
-    // console.log(response);
-
+    
     const response= await signIn("credentials", { // from next auth (for calling authorize fn)
      email:values.email,
       password:values.password,
@@ -110,4 +104,4 @@ export default function Login() {
         
       </div>
   </>
-}//md:translate-x-45
+}
