@@ -5,7 +5,6 @@ import Checkout from "@/components/cartItem/checkout";
 import {cartDataI, cartI, cartProductI } from "@/interfaces/cart";
 import { useEffect, useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
-import { date } from "zod";
 
 export default function Cart() {
   const [isLoading , setIsLoading]= useState<boolean>(false)
