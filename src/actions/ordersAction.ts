@@ -31,7 +31,7 @@ export async function addVisaOrder(id:string , userOrderData:userOrderI){
     const token = await getUserToken()
     
     try {
-       const response = await fetch(`${API_URL}/orders/checkout-session/${id}?url=http://localhost:3000`,{
+       const response = await fetch(`${API_URL}/orders/checkout-session/${id}?url=https://e-commerce-gocart.vercel.app`,{
         method:"post",
         body: JSON.stringify({"shippingAddress":userOrderData}),
         headers:{
