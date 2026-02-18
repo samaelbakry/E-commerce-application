@@ -148,9 +148,7 @@ export default function Navbar() {
             ) : ("")}
           </div>
           <div
-            className="md:hidden cursor-pointer transition-all duration-200"
-            onClick={ToggleMenu}
-          >
+            className="md:hidden cursor-pointer transition-all duration-200" onClick={ToggleMenu}>
             {isOpen ? (
               <IoIosClose className="size-8" />
             ) : (
