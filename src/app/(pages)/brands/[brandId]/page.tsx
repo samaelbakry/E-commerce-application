@@ -17,7 +17,7 @@ import { BrandI } from "@/interfaces/brands";
 import { productI } from "@/interfaces/products";
 import { getSpecificBrand } from "@/services/brandsServices";
 import { getAllProducts } from "@/services/productsServices";
-import { Star } from "lucide-react";
+import { Star, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -26,107 +26,132 @@ interface brandIdType {
   brandId: string;
 }
 
-export default async function BrandId({params}: { params: Promise<brandIdType>;}) {
+export default async function BrandId({ params }: { params: Promise<brandIdType> }) {
   const { brandId } = await params;
 
   const { data }: { data: BrandI } = await getSpecificBrand(brandId);
   const { data: allProducts }: { data: productI[] } = await getAllProducts();
-  
+
   const productBrand = allProducts.filter(
     (prod) => prod.brand?._id === brandId,
   );
 
   return (
-    <>
-      <header>
-        <div className="max-w-7xl mx-auto p-3 my-3 bg-blur flex justify-between">
-          <div className="flex flex-col gap-2 items-start m-2">
-            <Breadcrumb className="mt-2">
-              <BreadcrumbList>
+    <div className="bg-stone-50 text-stone-900 min-h-screen relative flex flex-col justify-between overflow-hidden pt-20 pb-12">
+      <div className="absolute inset-0 max-w-7xl mx-auto w-full h-full grid grid-cols-4 pointer-events-none px-6">
+        <div className="border-r border-stone-200/40 h-full w-full" />
+        <div className="border-r border-stone-200/40 h-full w-full hidden md:block" />
+        <div className="border-r border-stone-200/40 h-full w-full hidden md:block" />
+        <div className="h-full w-full" />
+      </div>
+
+      <header className="max-w-7xl mx-auto px-6 w-full relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stone-200 pb-10">
+          <div className="space-y-3">
+            <Breadcrumb>
+              <BreadcrumbList className="font-mono text-[10px] uppercase tracking-widest text-stone-400">
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/" className="accent-color">
+                  <BreadcrumbLink href="/" className="hover:text-stone-900 transition-colors">
                     Home
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/products" className="accent-color">
+                  <BreadcrumbLink href="/products" className="hover:text-stone-900 transition-colors">
                     Products
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/brands" className="accent-color">
+                  <BreadcrumbLink href="/brands" className="hover:text-stone-900 transition-colors">
                     Brands
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Specific Brand</BreadcrumbPage>
+                  <BreadcrumbPage className="text-stone-900 font-medium">
+                    {data?.name || "Collection"}
+                  </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
+
+            <h1 className="text-4xl sm:text-5xl font-light tracking-tight text-stone-900 uppercase">
+              {data?.name || "Brand Exhibit"}
+            </h1>
           </div>
+
+          <p className="max-w-xs text-sm text-stone-500 font-light leading-relaxed font-mono text-[11px] uppercase tracking-wider text-stone-400 md:text-right">
+             Curated Editions ({productBrand.length})
+          </p>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto bg-blur my-4 P-3 grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-0">
+      <main className="max-w-7xl mx-auto px-6 w-full mt-12 relative z-10 my-auto">
         {productBrand.length === 0 ? (
-          <>
-            <div className="col-span-full text-center py-5 text-lg font-semibold">
+          <div className="text-center py-24 border border-dashed border-stone-200 rounded-2xl bg-white/40">
+            <p className="text-sm font-light text-stone-400 font-mono uppercase tracking-widest">
               This brand is currently empty — new items coming soon.
-            </div>
-          </>
+            </p>
+          </div>
         ) : (
-          <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
             {productBrand.map((prod) => (
-              <div key={prod._id} className="col-span-1 mx-auto pt-2 relative">
-                <Card className="relative mx-auto md:w-full bg-blur pt-0 mt-2 md:h-140 h-120 hover:scale-105 duration-500 cursor-pointer w-100">
-                  <Link href={`/products/${prod.id}`}>
-                    <div className="relative" />
-                    <Image
-                      src={prod.imageCover}
-                      width={300}
-                      height={300}
-                      alt="product-cover-image"
-                      className="relative object-contain rounded-2xl p-2 w-75 h-75 md:w-100 md:h-100"
-                    />
-                    <CardHeader>
-                      <CardTitle className="flex items-center justify-between">
-                        Title: {prod.title.split(" ", 3).join(" ")}
-                        <span>{prod.brand.name}</span>
-                      </CardTitle>
-                      <span>{prod.category.name}</span>
-                      <CardDescription className="flex justify-between items-center">
-                        <div className="flex items-center gap-2">
-                          {[0, 1, 2, 3, 4].map((star, index) => {
-                            const filledStar =
-                              star < Math.round(prod.ratingsAverage);
-                            return (
-                              <React.Fragment key={index}>
-                                <Star
-                                  className={`size-4 ${filledStar ? "text-yellow-400 fill-yellow-400" : "text-gray-400"}`}
-                                />
-                              </React.Fragment>
-                            );
-                          })}
-                          <span className="accent-color">
-                            {prod.ratingsAverage}
-                          </span>
+              <div key={prod._id} className="group flex flex-col justify-between h-full relative">
+                <Card className="bg-transparent border-none p-0 shadow-none flex flex-col h-full rounded-none justify-between gap-4">
+                  
+                  <div className="space-y-4">
+                    <Link href={`/products/${prod._id || prod.id}`} className="relative block overflow-hidden bg-white border border-stone-200 rounded-xl p-6 transition-all duration-300 hover:border-stone-400 hover:shadow-md">
+                      <div className="w-full h-64 flex items-center justify-center mix-blend-multiply transition-transform duration-300 group-hover:scale-102">
+                        <Image
+                          src={prod.imageCover || prod.images?.[0]}
+                          width={300}
+                          height={300}
+                          alt={prod.title}
+                          className="object-contain max-h-full w-auto p-2"
+                        />
+                      </div>
+                    </Link>
+
+                    <CardHeader className="p-0 space-y-2">
+                      <div className="flex items-start justify-between gap-4 border-t border-stone-200/60 pt-4">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-700 font-medium">
+                          {prod.category?.name}
+                        </span>
+                        <div className="flex items-center gap-1 text-stone-600">
+                          <Star className="size-3 fill-amber-400 text-amber-400" />
+                          <span className="font-mono text-[11px] font-medium">{prod.ratingsAverage}</span>
                         </div>
-                        <p className="font-semibold second-color">
-                          Price: {prod.price} EGP
-                        </p>
+                      </div>
+
+                      <Link href={`/products/${prod._id || prod.id}`} className="flex items-start justify-between gap-2 group/title">
+                        <CardTitle className="text-base font-medium text-stone-900 tracking-tight line-clamp-1 group-hover/title:text-emerald-600 transition-colors">
+                          {prod.title.split(" ", 3).join(" ")}
+                        </CardTitle>
+                        <ArrowUpRight className="size-4 text-stone-300 shrink-0 transition-transform duration-300 group-hover/title:rotate-45 group-hover/title:text-stone-900" />
+                      </Link>
+
+                      <CardDescription className="p-0 flex items-baseline justify-between pt-1">
+                        <span className="font-mono text-[10px] uppercase tracking-widest text-stone-400">
+                          Value
+                        </span>
+                        <span className="text-base font-bold text-stone-900 tracking-tight">
+                          {prod.price} <span className="text-[10px] font-normal text-stone-500 font-mono">EGP</span>
+                        </span>
                       </CardDescription>
                     </CardHeader>
-                  </Link>
-                  <AddToCart prodId={prod._id} />
+                  </div>
+
+                  <div className="pt-2">
+                    <AddToCart prodId={prod._id} />
+                  </div>
+
                 </Card>
               </div>
             ))}
-          </>
+          </div>
         )}
-      </div>
-    </>
+      </main>
+    </div>
   );
 }

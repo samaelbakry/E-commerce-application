@@ -1,4 +1,5 @@
 "use client";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,24 +9,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cartContext } from "@/providers/cartDataProvider";
-import { HeartPlus, ShoppingBasket, User } from "lucide-react";
+import { Heart, ShoppingBag, User, Menu, X } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext, useState } from "react";
-import { HiBars3 } from "react-icons/hi2";
-import { IoIosClose } from "react-icons/io";
-import { MdOutlineShoppingCart } from "react-icons/md";
 import { Badge } from "../ui/badge";
 import { Spinner } from "../ui/spinner";
-
-const THEME = {
-  "--paper": "#FFFEF8",
-  "--ink": "#1C1B17",
-  "--mustard": "#E8A33D",
-  "--mustard-ink": "#B9781F",
-  "--red": "#C1443C",
-} as React.CSSProperties;
 
 export default function Navbar() {
   const { noOfCartItems, noOfwishlistItems, isLoading } = useContext(cartContext);
@@ -33,7 +23,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { data: sessionData } = useSession();
 
-  function ToggleMenu() {
+  function toggleMenu() {
     setIsOpen(!isOpen);
   }
 
@@ -44,149 +34,131 @@ export default function Navbar() {
   }
 
   const linkClass = (active: boolean) =>
-    `relative font-mono text-sm uppercase tracking-wider pb-1 transition-colors ${
+    `relative text-sm font-medium tracking-wide pb-1 transition-all duration-200 capitalize ${
       active
-        ? "text-[var(--ink)] border-b-2 border-dashed border-[var(--mustard-ink)]"
-        : "text-[var(--ink)]/60 hover:text-[var(--mustard-ink)]"
+        ? "text-zinc-900 font-semibold"
+        : "text-zinc-500 hover:text-zinc-900"
     }`;
 
   return (
-    <div style={THEME}>
-      <nav className="relative bg-[var(--paper)] shadow-sm rounded-xl border border-dashed border-[var(--ink)]/15">
-        <span className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border border-dashed border-[var(--ink)]/25 bg-[var(--paper)]" />
-        <span className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border border-dashed border-[var(--ink)]/25 bg-[var(--paper)]" />
+    <div className="w-full bg-stone-50/80 backdrop-blur-md sticky top-0 z-50 border-b border-zinc-200">
+      <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        
+        <div className="flex items-center gap-6">
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center text-white transition-colors group-hover:bg-emerald-600 duration-300">
+              <ShoppingBag className="size-4.5" />
+            </div>
+            <span className="text-xl font-bold tracking-tight text-zinc-900">
+              GOCART
+            </span>
+          </Link>
 
-        <div className="max-w-7xl mx-auto flex justify-between items-center p-3">
-          <div className="flex items-center gap-2">
-            <MdOutlineShoppingCart className="size-6 text-[var(--mustard-ink)]" />
-            <Link href="/">
-              <h2 className="nav-logo md:text-3xl text-2xl font-black text-[var(--ink)]">
-                GoCart
-              </h2>
-            </Link>
-          </div>
-
-          <div>
-            <ul className="md:flex hidden items-center gap-8">
-              <li>
-                <Link href="/products" className={linkClass(path.includes("/products"))}>
-                  products
-                </Link>
-              </li>
-              <li>
-                <Link href="/brands" className={linkClass(path.includes("/brands"))}>
-                  brands
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories" className={linkClass(path.includes("/categories"))}>
-                  categories
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <span className="flex items-center justify-center size-8 md:size-10 rounded-full border border-dashed border-[var(--ink)]/20 hover:border-[var(--mustard-ink)]/60 transition-colors cursor-pointer">
-                  <User className="size-4 md:size-5 text-[var(--ink)]/80" />
-                </span>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-32">
-                <DropdownMenuGroup>
-                  {sessionData ? (
-                    <>
-                      <DropdownMenuItem className="cursor-pointer">
-                        <Link href="/profile">Profile</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer">
-                        <Link href="/allorders">Orders</Link>
-                      </DropdownMenuItem>
-                    </>
-                  ) : (
-                    <>
-                      <DropdownMenuItem>
-                        <Link href="/register">Register</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link href="/login">Login</Link>
-                      </DropdownMenuItem>
-                    </>
+          <ul className="hidden md:flex items-center gap-6 ml-4">
+            {["products", "brands", "categories"].map((item) => (
+              <li key={item}>
+                <Link 
+                  href={`/${item}`} 
+                  className={linkClass(path.includes(`/${item}`))}
+                >
+                  {item}
+                  {path.includes(`/${item}`) && (
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-emerald-600 rounded-full animate-fade-in" />
                   )}
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    onClick={logOut}
-                    variant="destructive"
-                    className="cursor-pointer"
-                  >
-                    Log out
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-            {sessionData ? (
-              <>
-                <span className="relative">
-                  <Link href="/wishlist">
-                    <span className="flex items-center justify-center size-8 md:size-10 rounded-full border border-dashed border-[var(--ink)]/20 hover:border-[var(--red)]/60 transition-colors cursor-pointer">
-                      <HeartPlus className="size-4 md:size-5 text-[var(--ink)]/80" />
-                    </span>
-                    <Badge className="bg-[var(--red)]/10 text-[var(--red)] border border-dashed border-[var(--red)]/40 absolute -top-1.5 -end-1.5 font-mono">
-                      {isLoading ? <Spinner /> : <>{noOfwishlistItems}</>}
-                    </Badge>
-                  </Link>
-                </span>
-                <span className="relative">
-                  <Link href="/cart">
-                    <span className="flex items-center justify-center size-8 md:size-10 rounded-full border border-dashed border-[var(--ink)]/20 hover:border-[var(--red)]/60 transition-colors cursor-pointer">
-                      <ShoppingBasket className="size-4 md:size-5 text-[var(--ink)]/80" />
-                    </span>
-                    <Badge className="bg-[var(--red)]/10 text-[var(--red)] border border-dashed border-[var(--red)]/40 absolute -top-1.5 -end-1.5 font-mono">
-                      {isLoading ? <Spinner /> : <>{noOfCartItems}</>}
-                    </Badge>
-                  </Link>
-                </span>
-              </>
-            ) : (
-              ""
-            )}
-          </div>
+        <div className="flex items-center gap-4">
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center justify-center size-9 rounded-full border border-zinc-200 bg-white hover:border-zinc-400 transition-colors cursor-pointer outline-none">
+                <User className="size-4.5 text-zinc-700" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-36 mt-1" align="end">
+              <DropdownMenuGroup>
+                {sessionData ? (
+                  <>
+                    <DropdownMenuItem className="cursor-pointer" asChild>
+                      <Link href="/profile">Profile</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer" asChild>
+                      <Link href="/allorders">Orders</Link>
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuItem className="cursor-pointer" asChild>
+                      <Link href="/register">Register</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer" asChild>
+                      <Link href="/login">Login</Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem
+                  onClick={logOut}
+                  variant="destructive"
+                  className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50"
+                >
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
-          <div
-            className="md:hidden flex items-center justify-center size-8 rounded-full border border-dashed border-[var(--ink)]/20 cursor-pointer transition-all duration-200"
-            onClick={ToggleMenu}
+          {sessionData && (
+            <div className="flex items-center gap-3">
+              <Link href="/wishlist" className="relative flex items-center justify-center size-9 rounded-full border border-zinc-200 bg-white hover:border-zinc-400 transition-colors cursor-pointer">
+                <Heart className="size-4.5 text-zinc-700" />
+                <Badge className="bg-zinc-900 text-white rounded-full min-w-5 h-5 flex items-center justify-center p-0 text-[10px] absolute -top-1.5 -end-1.5 border border-white">
+                  {isLoading ? <Spinner className="size-2.5" /> : noOfwishlistItems}
+                </Badge>
+              </Link>
+
+              <Link href="/cart" className="relative flex items-center justify-center size-9 rounded-full border border-zinc-200 bg-white hover:border-zinc-400 transition-colors cursor-pointer">
+                <ShoppingBag className="size-4.5 text-zinc-700" />
+                <Badge className="bg-emerald-600 text-white rounded-full min-w-5 h-5 flex items-center justify-center p-0 text-[10px] absolute -top-1.5 -end-1.5 border border-white">
+                  {isLoading ? <Spinner className="size-2.5" /> : noOfCartItems}
+                </Badge>
+              </Link>
+            </div>
+          )}
+
+          <button
+            className="md:hidden flex items-center justify-center size-9 rounded-full border border-zinc-200 bg-white text-zinc-700 cursor-pointer hover:bg-zinc-50 transition-colors"
+            onClick={toggleMenu}
           >
-            {isOpen ? (
-              <IoIosClose className="size-6 text-[var(--ink)]" />
-            ) : (
-              <HiBars3 className="size-5 text-[var(--ink)]" />
-            )}
-          </div>
+            {isOpen ? <X className="size-4.5" /> : <Menu className="size-4.5" />}
+          </button>
         </div>
       </nav>
 
-      {isOpen && (
-        <ul className="md:hidden mt-2 p-3 bg-[var(--paper)] border border-dashed border-[var(--ink)]/15 rounded-xl flex items-center justify-center gap-6">
-          <li>
-            <Link href="/products" className={linkClass(path === "/products")}>
-              products
-            </Link>
-          </li>
-          <li>
-            <Link href="/brands" className={linkClass(path === "/brands")}>
-              brands
-            </Link>
-          </li>
-          <li>
-            <Link href="/categories" className={linkClass(path === "/categories")}>
-              categories
-            </Link>
-          </li>
-        </ul>
+     {isOpen && (
+        <div className="md:hidden border-t border-zinc-200 bg-white animate-in slide-in-from-top duration-200">
+          <ul className="px-6 py-4 flex flex-col gap-4">
+            {["products", "brands", "categories"].map((item) => (
+              <li key={item}>
+                <Link
+                  href={`/${item}`}
+                  onClick={() => setIsOpen(false)}
+                  className={`block text-sm font-medium capitalize transition-colors ${
+                    path.includes(`/${item}`) ? "text-emerald-600" : "text-zinc-600"
+                  }`}
+                >
+                  {item}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
