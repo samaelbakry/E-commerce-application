@@ -2,120 +2,169 @@
 import { getUserWishlist } from "@/actions/wishlistAction";
 import AddToCart from "@/components/addToCart/addToCart";
 import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Card } from "@/components/ui/card";
 import { productI } from "@/interfaces/products";
 import { wishlistI } from "@/interfaces/wishlist";
-import { Star } from "lucide-react";
+import { Star, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-export default  function Wishlist() {
-  const [wishlistProducts, setWishlistProducts] = useState<productI[]>([])
+export default function Wishlist() {
+  const [wishlistProducts, setWishlistProducts] = useState<productI[]>([]);
 
   async function getWishlist() {
-      const data: wishlistI= await getUserWishlist();
-      console.log(data);
-      
-      setWishlistProducts(data.data)
-      //  setWishlistProducts(Array.isArray(data.data) ? data.data : []);
-      
+    const data: wishlistI = await getUserWishlist();
+    setWishlistProducts(data?.data ?? []);
   }
 
   useEffect(() => {
-    getWishlist()
-  }, [])
-  
+    getWishlist();
+  }, []);
 
   return (
-    <>
-      <header>
-        <div className="max-w-7xl md:mx-auto mx-5 p-3 my-3 bg-blur flex flex-wrap justify-between">
-          <div className="flex flex-col gap-2 items-start m-2">
-            <h1 className="text-xl second-color font-bold">WISHLIST</h1>
-            <p className="mt-2 text-gray-600 text-md">
-              Locked in. Ready when you are
-            </p>
+    <div className="bg-stone-50 text-stone-900 min-h-screen relative flex flex-col justify-between overflow-hidden pt-20 pb-12">
+      <div className="absolute inset-0 max-w-7xl mx-auto w-full h-full grid grid-cols-4 pointer-events-none px-6">
+        <div className="border-r border-stone-200/40 h-full w-full" />
+        <div className="border-r border-stone-200/40 h-full w-full hidden md:block" />
+        <div className="border-r border-stone-200/40 h-full w-full hidden md:block" />
+        <div className="h-full w-full" />
+      </div>
+
+      <header className="max-w-7xl mx-auto px-6 w-full relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stone-200 pb-10">
+          <div className="space-y-3">
+            <Breadcrumb>
+              <BreadcrumbList className="font-mono text-[10px] uppercase tracking-widest text-stone-400">
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/" className="hover:text-stone-900 transition-colors">
+                    Home
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="text-stone-900 font-medium">
+                    Wishlist
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            
+            <h1 className="text-4xl sm:text-5xl font-light tracking-tight text-stone-900">
+              Curated <span className="font-serif italic text-emerald-600">Selection</span>
+            </h1>
           </div>
-          {wishlistProducts.length >= 1 ? (
-            <>
-              <Link href="/cart">
-                <button className="text-md text-white font-semibold rounded-xl bg-cyan-700 p-2 cursor-pointer">
-                  Go to your cart
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 max-w-md">
+            <p className="text-sm text-stone-500 font-light leading-relaxed">
+              Your personal library of exceptional objects. Reserved and prepared for assignment.
+            </p>
+            {wishlistProducts.length >= 1 && (
+              <Link href="/cart" className="shrink-0">
+                <button className="text-xs font-mono uppercase tracking-wider text-white bg-stone-950 px-4 py-2.5 rounded-none hover:bg-emerald-600 transition-colors duration-300">
+                  View Shopping Cart
                 </button>
               </Link>
-            </>
-          ) : (
-            ""
-          )}
+            )}
+          </div>
         </div>
       </header>
 
-      <div className="max-w-7xl border border-gray-300 rounded-2xl mx-5 md:mx-auto mb-5 mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:p-5">
+      <main className="max-w-7xl mx-auto px-6 w-full mt-12 relative z-10 my-auto flex-1">
         {wishlistProducts.length === 0 ? (
-          <>
-           <div className="flex flex-col gap-2 m-2 md:m-0">
-             <span className="text-xl font-semibold">No items yet</span>
+          <div className="flex flex-col items-center justify-center text-center py-24 max-w-sm mx-auto space-y-4">
+            <span className="font-mono text-xs uppercase tracking-widest text-stone-400">
+              Your collection is empty
+            </span>
+            <p className="text-sm text-stone-500 font-light">
+              Explore our architectural spaces to find items worth pinning here.
+            </p>
             <Link href="/products">
-              <button className="text-md text-white font-semibold rounded-xl bg-cyan-700 p-2 cursor-pointer">
-                Go Shopping!
+              <button className="text-xs font-mono uppercase tracking-wider text-white bg-stone-950 px-5 py-3 rounded-none hover:bg-emerald-600 transition-colors duration-300">
+                Go Shopping
               </button>
             </Link>
-           </div>
-          </>
+          </div>
         ) : (
-          <>
-            {wishlistProducts.map((prod) => (
-              <div key={prod._id}>
-                <Card className="relative mx-auto md:w-full bg-blur pt-0 mt-2 md:h-140 h-120 hover:scale-105 duration-500 cursor-pointer w-100">
-                  <Link href={`/products/${prod._id}`}>
-                    <div className="relative" />
-                    <Image
-                      src={prod.imageCover}
-                      width={300}
-                      height={300}
-                      alt="product-cover-image"
-                      className="relative object-contain rounded-2xl p-2 w-75 h-75 md:w-100 md:h-100"
-                    />
-                    <CardHeader>
-                      <CardTitle className="flex items-center justify-between">
-                        Title: {prod.title.split(" " , 3).join("")}
-                        <span>{prod.brand.name}</span>
-                      </CardTitle>
-                      <span>{prod.category.name}</span>
-                      <CardDescription className="flex justify-between items-center">
-                        <div className="flex items-center gap-2">
-                          {[0, 1, 2, 3, 4].map((star, index) => {
-                            const filledStar = star < Math.round(prod.ratingsAverage);
-                            return (
-                              <React.Fragment key={index}>
-                                <Star
-                                  className={`size-4 ${filledStar ? "text-yellow-400 fill-yellow-400" : "text-gray-400"}`}
-                                />
-                              </React.Fragment>
-                            );
-                          })}
-                          <span className="accent-color">
-                            {prod.ratingsAverage}
-                          </span>
-                        </div>
-                        <p className="font-semibold second-color">
-                          Price: {prod.price} EGP
-                        </p>
-                      </CardDescription>
-                    </CardHeader>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+            {wishlistProducts.map((prod, idx) => (
+              <div key={prod._id} className="group flex flex-col justify-between h-full">
+                <Card className="bg-transparent border-none p-0 shadow-none flex flex-col h-full rounded-none">
+                  
+                  <Link href={`/products/${prod._id}`} className="relative block overflow-hidden bg-white border border-stone-200 rounded-xl p-6 transition-all duration-300 hover:border-stone-400 hover:shadow-md">
+                    <div className="absolute top-4 left-4 text-[10px] font-mono text-stone-300 group-hover:text-stone-400 transition-colors">
+                      ITEM/{idx + 1}
+                    </div>
+                    
+                    <div className="w-full h-44 flex items-center justify-center mix-blend-multiply transition-transform duration-300 group-hover:scale-102">
+                      <Image
+                        src={prod.imageCover}
+                        width={300}
+                        height={300}
+                        alt={prod.title}
+                        className="object-contain max-h-full w-auto p-2"
+                        priority={idx < 4}
+                      />
+                    </div>
                   </Link>
-                  <AddToCart prodId={prod._id} wishlistPage wishlistProducts={wishlistProducts} setWishlistProducts={setWishlistProducts} />
+
+                  <div className="pt-4 space-y-2 border-t border-stone-200/60 mt-3">
+                    <div className="flex items-start justify-between gap-4">
+                      <Link href={`/products/${prod._id}`} className="flex-1">
+                        <span className="block font-mono text-[10px] uppercase tracking-wider text-stone-400 mb-0.5">
+                          {prod.brand.name} — {prod.category.name}
+                        </span>
+                        <h5 className="text-sm font-bold text-stone-900 tracking-wide uppercase transition-colors duration-200 group-hover:text-emerald-600 line-clamp-1">
+                          {prod.title}
+                        </h5>
+                      </Link>
+                      <ArrowUpRight className="size-3.5 text-stone-300 shrink-0 mt-0.5 transition-transform duration-300 group-hover:rotate-45 group-hover:text-stone-900" />
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1">
+                      <div className="flex items-center gap-0.5">
+                        {Array.from({ length: 5 }).map((_, index) => {
+                          const filledStar = index < Math.round(prod.ratingsAverage);
+                          return (
+                            <Star
+                              key={index}
+                              className={`size-3 ${filledStar ? "text-amber-500 fill-amber-500" : "text-stone-200"}`}
+                            />
+                          );
+                        })}
+                        <span className="text-[11px] font-mono text-stone-500 ml-1">
+                          ({prod.ratingsAverage})
+                        </span>
+                      </div>
+                      
+                      <p className="text-sm font-medium font-mono text-stone-900">
+                        {prod.price.toLocaleString()} EGP
+                      </p>
+                    </div>
+
+                    <div className="pt-2">
+                      <AddToCart 
+                        prodId={prod._id} 
+                        wishlistPage 
+                        wishlistProducts={wishlistProducts} 
+                        setWishlistProducts={setWishlistProducts} 
+                      />
+                    </div>
+
+                  </div>
                 </Card>
               </div>
             ))}
-          </>
+          </div>
         )}
-      </div>
-    </>
+      </main>
+    </div>
   );
 }
