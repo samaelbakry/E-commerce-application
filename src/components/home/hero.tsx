@@ -45,51 +45,58 @@ export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const { data: sessionData } = useSession();
 
-  useGSAP(
-    () => {
-      const split = new SplitText(".title-text", { type: "words,chars" });
-      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+ useGSAP(
+  () => {
+    const q = gsap.utils.selector(ref);
 
-      tl.from(".hero-badge", {
-        opacity: 0,
-        y: -15,
-        duration: 0.6,
-      })
-        .from(
-          split.chars,
-          {
-            yPercent: 100,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.015,
-          },
-          "-=0.4"
-        )
-        .from(
-          ".fade-in-element",
-          {
-            opacity: 0,
-            y: 20,
-            duration: 0.6,
-            stagger: 0.1,
-          },
-          "-=0.5"
-        )
-        .from(
-          ".perk-card",
-          {
-            opacity: 0,
-            y: 15,
-            duration: 0.5,
-            stagger: 0.05,
-          },
-          "-=0.4"
-        );
+    const tl = gsap.timeline({
+      defaults: {
+        ease: "power2.out",
+        duration: 0.8,
+      },
+    });
 
-      return () => split.revert();
-    },
-    { scope: ref }
-  );
+    tl.from(q(".hero-badge"), {
+      opacity: 0,
+      y: -20,
+    })
+      .from(
+        q(".hero-title"),
+        {
+          opacity: 0,
+          y: 40,
+        },
+        "-=0.4"
+      )
+      .from(
+        q(".hero-description"),
+        {
+          opacity: 0,
+          y: 25,
+        },
+        "-=0.45"
+      )
+      .from(
+        q(".hero-buttons"),
+        {
+          opacity: 0,
+          y: 20,
+        },
+        "-=0.45"
+      )
+      .from(
+        q(".perk-card"),
+        {
+          opacity: 0,
+          y: 20,
+          stagger: 0.12,
+          duration: 0.6,
+        },
+        "-=0.2"
+      );
+  },
+  { scope: ref }
+);
 
   return (
     <main
@@ -106,12 +113,11 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10 my-auto">
         <div className="flex flex-col gap-10 max-w-5xl">
           
-          <div className="hero-badge inline-flex items-center gap-2 self-start px-3 py-1 bg-white border border-stone-200 rounded-full shadow-sm text-[10px] font-bold tracking-widest uppercase text-stone-600">
-            <Star className="size-3 fill-emerald-600 text-emerald-600 animate-pulse" />
+<div className="hero-badge inline-flex items-center gap-2 self-start px-3 py-1 bg-white border border-stone-200 rounded-full shadow-sm text-[10px] font-bold tracking-widest uppercase text-stone-600">            <Star className="size-3 fill-emerald-600 text-emerald-600 animate-pulse" />
             <span>The New Era of E-Commerce</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-stone-900 leading-[1.08]">
+          <h1 className="hero-title text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-stone-900 leading-[1.08]">
             <span className="title-text block font-extralight text-stone-400">Welcome to GoCart,</span>
             <span className="title-text block font-normal">Elevated shopping for</span>
             <span className="title-text block text-emerald-600 font-serif italic font-normal tracking-normal">
@@ -119,12 +125,12 @@ export default function Hero() {
             </span>
           </h1>
 
-          <div className="fade-in-element flex flex-col md:flex-row md:items-end gap-8 justify-between mt-4">
+          <div className=" hero-description flex flex-col md:flex-row md:items-end gap-8 justify-between mt-4">
             <p className="max-w-md text-base sm:text-lg text-stone-600 leading-relaxed font-light">
               Discover thousands of authentic goods across premium curated categories, built with absolute structural clarity and concierge fulfillment.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 shrink-0">
+            <div className="hero-buttons flex flex-wrap items-center gap-4 shrink-0">
               <Link href="/products">
                 <button className="group relative bg-stone-900 hover:bg-emerald-600 text-white text-sm font-medium px-8 py-4 rounded-full transition-all duration-300 flex items-center gap-3 cursor-pointer">
                   <span>Browse Collection</span>
